@@ -28,19 +28,19 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
+    "@lblod/submission-form-helpers": "~2.10.1",
     "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-concurrency": "^2.3.2 || ^3.0.0",
-    "rdflib": "^2.2.19",
-    "@lblod/submission-form-helpers": "~2.10.1"
+    "rdflib": "^2.2.19"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.0.1",
-    "@ember/test-helpers": "^2.9.3",
+    "@ember/test-helpers": "^3.0.3",
     "@embroider/test-setup": "^2.1.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -54,8 +54,9 @@
     "ember-cli-terser": "^4.0.2",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^7.0.0",
-    "ember-qunit": "^6.2.0",
+    "ember-qunit": "^8.1.0",
     "ember-resolver": "^10.0.0",
+    "ember-resources": "^7.0.2",
     "ember-source": "~4.12.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^5.7.2",
@@ -76,9 +77,9 @@
     "webpack": "^5.78.0"
   },
   "peerDependencies": {
-    "ember-source": "^3.0.0 || ^4.0.0 || ^5.0.0",
+    "@appuniversum/ember-appuniversum": "^2.15.0 || ^3.0.0",
     "@lblod/ember-submission-form-fields": "~2.22.2",
-    "@appuniversum/ember-appuniversum": "^2.15.0 || ^3.0.0"
+    "ember-source": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"

@@ -30,9 +30,8 @@ export default class InstanceComponent extends Component {
 
   historyMessage;
 
-  constructor() {
-    super(...arguments);
-    this.setupFormForTtl.perform();
+  get saveTitle() {
+    return this.args.saveTitle || 'Pas aan';
   }
 
   save = task({ keepLatest: true }, async () => {
@@ -90,11 +89,9 @@ export default class InstanceComponent extends Component {
     this.historyMessage = event.target.value.trim();
   }
 
-  @action
-  async onRestore(historicalInstance) {
-    this.formInfo = null;
-    this.setupFormForTtl.perform(historicalInstance.formInstanceTtl);
-  }
+  setupForm = () => {
+    this.setupFormForTtl.perform(this.args.initialFormTtl?.current);
+  };
 
   setupFormForTtl = task(async (newFormTtl = null) => {
     const form = this.args.form;

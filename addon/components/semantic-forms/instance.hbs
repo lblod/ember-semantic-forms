@@ -1,3 +1,4 @@
+{{(this.setupForm)}}
 <div class="semantic-forms-instance">
   {{#unless this.setupFormForTtl.isRunning}}
     <section>
@@ -28,13 +29,13 @@
           <AuButton
             {{on "click" this.tryOpenHistoryModal}}
             @disabled={{or this.save.isRunning (not this.hasChanges)}}
-          >Pas aan</AuButton>
+          >{{this.saveTitle}}</AuButton>
           <SemanticForms::SaveWithHistory
             @save={{perform this.save}}
             @isSaving={{this.save.isRunning}}
             @updateValue={{this.updateHistoryMessage}}
             @isModalOpen={{this.isSaveHistoryModalOpen}}
-          >Pas aan</SemanticForms::SaveWithHistory>
+          >{{this.saveTitle}}</SemanticForms::SaveWithHistory>
           {{#if @onCancel}}
             <SemanticForms::CancelWithConfirm
               @cancel={{@onCancel}}
