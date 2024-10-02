@@ -52,7 +52,7 @@ export default class NewInstanceComponent extends Component {
     }
 
     if (this.args.onCreate) {
-      this.args.onCreate({
+      await this.args.onCreate({
         instanceTtl: ttlCode,
         instanceId: result.id,
       });

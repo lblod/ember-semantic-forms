@@ -22,6 +22,7 @@ export default class InstanceComponent extends Component {
   @tracked hasChanges = false;
   @tracked forceShowErrors = false;
   @tracked showEditButtons = false;
+  @tracked isSaveHistoryModalOpen = false;
 
   formStore = null;
   savedTriples = null;
@@ -53,7 +54,7 @@ export default class InstanceComponent extends Component {
     }
 
     if (this.args.onSave) {
-      this.args.onSave({
+      await this.args.onSave({
         instanceId,
         instanceTtl: ttlCode,
         response: result.body,
@@ -74,7 +75,11 @@ export default class InstanceComponent extends Component {
         'Niet alle velden zijn correct ingevuld. Gelieve deze eerst te corrigeren.';
       return;
     }
-    this.isSaveHistoryModalOpen = true;
+    if (this.args.customHistoryMessage) {
+      this.isSaveHistoryModalOpen = true;
+    } else {
+      this.save.perform();
+    }
   }
 
   @action

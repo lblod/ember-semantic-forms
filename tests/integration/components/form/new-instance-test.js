@@ -10,15 +10,15 @@ module('Integration | Component | form/new-instance', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Form::NewInstance />`);
+    await render(hbs`<SemanticForms::NewInstance />`);
 
     assert.dom(this.element).hasText('');
 
     // Template block usage:
     await render(hbs`
-      <Form::NewInstance>
+      <SemanticForms::NewInstance>
         template block text
-      </Form::NewInstance>
+      </SemanticForms::NewInstance>
     `);
 
     assert.dom(this.element).hasText('template block text');

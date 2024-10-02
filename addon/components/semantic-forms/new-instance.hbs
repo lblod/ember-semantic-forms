@@ -1,43 +1,45 @@
-{{#unless this.setupNewForm.isRunning}}
-  <section>
-    <RdfForm
-      @groupClass="au-o-grid__item"
-      @form={{this.formInfo.form}}
-      @show={{false}}
-      @graphs={{this.formInfo.graphs}}
-      @sourceNode={{this.formInfo.sourceNode}}
-      @formStore={{this.formInfo.formStore}}
-      @forceShowErrors={{this.forceShowErrors}}
-      @useNewListingLayout={{true}}
-      @level={{2}}
-      class="au-u-max-width-medium"
-    />
-    {{yield}}
-  </section>
+<div class="semantic-forms-new-instance">
+  {{#unless this.setupNewForm.isRunning}}
+    <section>
+      <RdfForm
+        @groupClass="au-o-grid__item"
+        @form={{this.formInfo.form}}
+        @show={{false}}
+        @graphs={{this.formInfo.graphs}}
+        @sourceNode={{this.formInfo.sourceNode}}
+        @formStore={{this.formInfo.formStore}}
+        @forceShowErrors={{this.forceShowErrors}}
+        @useNewListingLayout={{true}}
+        @level={{2}}
+        class="au-u-max-width-medium"
+      />
+      {{yield}}
+    </section>
 
-  {{#if this.errorMessage}}
-    <AuAlert @skin="error" @title="Fout" @icon="alert-triangle">
-      {{this.errorMessage}}
-    </AuAlert>
-  {{/if}}
+    {{#if this.errorMessage}}
+      <AuAlert @skin="error" @title="Fout" @icon="alert-triangle">
+        {{this.errorMessage}}
+      </AuAlert>
+    {{/if}}
 
-  <AuToolbar class="au-u-margin-top" as |Group|>
-    <Group>
-      <AuButtonGroup>
-        <AuButton
-          {{on "click" (perform this.save)}}
-          @disabled={{this.save.isRunning}}
-        >
-          Bewaar
-        </AuButton>
-        {{#if @onCancel}}
-          <Form::CancelWithConfirm
-            @cancel={{@onCancel}}
-          >Annuleer</Form::CancelWithConfirm>
-        {{/if}}
-      </AuButtonGroup>
-    </Group>
-  </AuToolbar>
+    <AuToolbar class="au-u-margin-top" as |Group|>
+      <Group>
+        <AuButtonGroup>
+          <AuButton
+            {{on "click" (perform this.save)}}
+            @loading={{this.save.isRunning}}
+          >
+            Bewaar
+          </AuButton>
+          {{#if @onCancel}}
+            <SemanticForms::CancelWithConfirm
+              @cancel={{@onCancel}}
+            >Annuleer</SemanticForms::CancelWithConfirm>
+          {{/if}}
+        </AuButtonGroup>
+      </Group>
+    </AuToolbar>
 
-  <Form::TripleContent @triples={{this.sourceTriples}} />
-{{/unless}}
+    <SemanticForms::TripleContent @triples={{this.sourceTriples}} />
+  {{/unless}}
+</div>
