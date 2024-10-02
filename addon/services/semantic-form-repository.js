@@ -120,7 +120,7 @@ export default class FormRepositoryService extends Service {
   };
 
   async getFormDefinition(formId) {
-    const definition = definitions[formId];
+    const definition = this.definitions[formId];
     if (definition) {
       return definition;
     }
@@ -129,13 +129,15 @@ export default class FormRepositoryService extends Service {
       formId
     );
 
-    return Definition.create({
+    const def = Definition.create({
       id: formId,
       formTtl,
       metaTtl,
       prefix,
       withHistory,
     });
+    this.definitions[formId] = def;
+    return def;
   }
 
   isValidForm(formInfo) {
