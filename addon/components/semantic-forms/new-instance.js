@@ -20,6 +20,7 @@ export default class NewInstanceComponent extends Component {
   @tracked errorMessage;
   @tracked formInfo = null;
   @tracked forceShowErrors = false;
+  createdAt = null;
   formStore = null;
   savedTriples = null;
   formId = `form-${guidFor(this)}`;
@@ -62,6 +63,7 @@ export default class NewInstanceComponent extends Component {
   });
 
   setupNewForm = task(async () => {
+    this.createdAt = new Date();
     const form = this.args.form;
     const uri = `${form.prefix}${uuid()}`;
     const sourceTtl = this.args.buildSourceTtl
@@ -128,7 +130,7 @@ export default class NewInstanceComponent extends Component {
 
       if (this.savedTriples === this.sourceTriples) {
         this.semanticFormDirtyState.markClean(this.formId);
-      } else {
+      } else if (new Date().getTime() - this.createdAt.getTime() > 200) {
         this.semanticFormDirtyState.markDirty(this.formId);
       }
     };

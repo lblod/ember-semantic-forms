@@ -24,6 +24,7 @@ export default class InstanceComponent extends Component {
   @tracked showEditButtons = false;
   @tracked isSaveHistoryModalOpen = false;
 
+  createdAt = null;
   formStore = null;
   savedTriples = null;
   formId = `form-${guidFor(this)}`;
@@ -90,6 +91,7 @@ export default class InstanceComponent extends Component {
   }
 
   setupForm = () => {
+    this.createdAt = new Date();
     this.setupFormForTtl.perform(this.args.initialFormTtl?.current);
   };
 
@@ -176,7 +178,10 @@ export default class InstanceComponent extends Component {
       if (this.savedTriples === this.sourceTriples) {
         this.semanticFormDirtyState.markClean(this.formId);
         this.hasChanges = false;
-      } else {
+      } else if (new Date().getTime() - this.createdAt.getTime() > 200) {
+        this.semanticFormDirtyState.markDirty(this.formId);
+        this.hasChanges = true;
+      } else if (this.args.initialFormTtl?.current) {
         this.semanticFormDirtyState.markDirty(this.formId);
         this.hasChanges = true;
       }

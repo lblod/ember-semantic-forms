@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class FormCancelWithConfirmComponent extends Component {
-  @service formDirtyState;
+  @service semanticFormDirtyState;
 
   @tracked isModalOpen = false;
 
@@ -22,7 +22,7 @@ export default class FormCancelWithConfirmComponent extends Component {
 
   @action
   cancel() {
-    if (this.formDirtyState.hasDirtyForms) {
+    if (this.semanticFormDirtyState.hasDirtyForms) {
       this.isModalOpen = true;
     } else {
       this.confirmCancel();
