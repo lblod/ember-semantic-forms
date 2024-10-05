@@ -1,14 +1,14 @@
 import Service from '@ember/service';
-
-import ENV from 'frontend-lmb/config/environment';
+import { tracked } from '@glimmer/tracking';
 
 export default class FormDirtyStateService extends Service {
   dirtyForms = new Set();
+  @tracked disableReloadWarnings = true;
 
   constructor() {
     super(...arguments);
 
-    if (!ENV.APP.DISABLE_RELOAD_WARNINGS) {
+    if (!this.disableReloadWarnings) {
       window.addEventListener('beforeunload', (e) => {
         if (this.hasDirtyForms) {
           e.preventDefault();

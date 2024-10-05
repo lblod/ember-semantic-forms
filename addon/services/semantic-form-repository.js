@@ -1,20 +1,17 @@
 import Service from '@ember/service';
 
 import { timeout } from 'ember-concurrency';
-import {
-  JSON_API_TYPE,
-  RESOURCE_CACHE_TIMEOUT,
-} from 'frontend-lmb/utils/constants';
+import { JSON_API_TYPE, RESOURCE_CACHE_TIMEOUT } from '../utils/constants';
 import { validateForm } from '@lblod/ember-submission-form-fields';
 import { tracked } from '@glimmer/tracking';
 import EmberObject from '@ember/object';
 
-const Definition = EmberObject.extend({
-  formTtl: '',
-  metaTtl: null,
-  prefix: '',
-  withHistory: false,
-});
+class Definition extends EmberObject {
+  formTtl = '';
+  metaTtl = null;
+  prefix = '';
+  withHistory = false;
+}
 
 export default class FormRepositoryService extends Service {
   @tracked showSourceTriples;

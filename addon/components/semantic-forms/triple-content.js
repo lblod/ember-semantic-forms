@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 
-// as taken from LMB
 export default class FormTripleContentComponent extends Component {
   @tracked expanded = false;
   @service formRepository;
