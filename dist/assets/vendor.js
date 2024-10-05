@@ -56839,10 +56839,10 @@ define("ember-resolver/features", [], function () {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "expanded", _descriptor, this);
-      _initializerDefineProperty(this, "formRepository", _descriptor2, this);
+      _initializerDefineProperty(this, "semanticFormRepository", _descriptor2, this);
     }
     get showSourceTriples() {
-      return this.formRepository.showSourceTriples;
+      return this.semanticFormRepository.showSourceTriples;
     }
     toggleExpanded() {
       this.expanded = !this.expanded;
@@ -56854,7 +56854,7 @@ define("ember-resolver/features", [], function () {
     initializer: function () {
       return false;
     }
-  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "formRepository", [_service.service], {
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "semanticFormRepository", [_service.service], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -56933,7 +56933,7 @@ define("ember-resolver/features", [], function () {
       _defineProperty(this, "withHistory", false);
     }
   }
-  let FormRepositoryService = _exports.default = (_class = class FormRepositoryService extends _service.default {
+  let SemanticFormRepositoryService = _exports.default = (_class = class SemanticFormRepositoryService extends _service.default {
     constructor(...args) {
       super(...args);
       _initializerDefineProperty(this, "showSourceTriples", _descriptor, this);
