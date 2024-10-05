@@ -150,6 +150,34 @@
   });
   0; //eaimeta@70e063a35619d71f0,"semantic-forms/components/semantic-forms/save-with-history"eaimeta@70e063a35619d71f
 });
+;define("dummy/components/semantic-forms/table-pagination", ["exports", "semantic-forms/components/semantic-forms/table-pagination"], function (_exports, _tablePagination) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _tablePagination.default;
+    }
+  });
+  0; //eaimeta@70e063a35619d71f0,"semantic-forms/components/semantic-forms/table-pagination"eaimeta@70e063a35619d71f
+});
+;define("dummy/components/semantic-forms/table-skeleton", ["exports", "semantic-forms/components/semantic-forms/table-skeleton"], function (_exports, _tableSkeleton) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _tableSkeleton.default;
+    }
+  });
+  0; //eaimeta@70e063a35619d71f0,"semantic-forms/components/semantic-forms/table-skeleton"eaimeta@70e063a35619d71f
+});
 ;define("dummy/components/semantic-forms/triple-content", ["exports", "semantic-forms/components/semantic-forms/triple-content"], function (_exports, _tripleContent) {
   "use strict";
 

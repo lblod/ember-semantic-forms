@@ -55981,7 +55981,7 @@ define("ember-resolver/features", [], function () {
   let FormCancelWithConfirmComponent = _exports.default = (_class = class FormCancelWithConfirmComponent extends _component2.default {
     constructor(...args) {
       super(...args);
-      _initializerDefineProperty(this, "formDirtyState", _descriptor, this);
+      _initializerDefineProperty(this, "semanticFormDirtyState", _descriptor, this);
       _initializerDefineProperty(this, "isModalOpen", _descriptor2, this);
     }
     confirmCancel() {
@@ -55992,13 +55992,13 @@ define("ember-resolver/features", [], function () {
       this.isModalOpen = false;
     }
     cancel() {
-      if (this.formDirtyState.hasDirtyForms) {
+      if (this.semanticFormDirtyState.hasDirtyForms) {
         this.isModalOpen = true;
       } else {
         this.confirmCancel();
       }
     }
-  }, _descriptor = _applyDecoratedDescriptor(_class.prototype, "formDirtyState", [_service.service], {
+  }, _descriptor = _applyDecoratedDescriptor(_class.prototype, "semanticFormDirtyState", [_service.service], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -56144,7 +56144,7 @@ define("ember-resolver/features", [], function () {
         </:body>
       </AuTable>
       {{#if (gt this.history.length 0)}}
-        <Shared::TablePagination
+        <SemanticForms::TablePagination
           @pageSize={{this.size}}
           @page={{this.page}}
           @totalItems={{this.totalCount}}
@@ -56159,8 +56159,8 @@ define("ember-resolver/features", [], function () {
   
   */
   {
-    "id": "vLDIPj7g",
-    "block": "[[[10,0],[14,0,\"semantic-forms-history\"],[12],[1,\"\\n\"],[41,[30,0,[\"fetchCurrentHistoryPage\",\"isRunning\"]],[[[1,\"    \"],[8,[39,1],null,[[\"@columns\",\"@rows\"],[4,[30,0,[\"size\"]]]],null],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,2],null,[[\"@size\"],[[30,0,[\"size\"]]]],[[\"header\",\"body\"],[[[[1,\"\\n        \"],[10,\"tr\"],[12],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Tijdstip\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Gebruiker\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Aanpassing\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]],[[[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"history\"]]],null]],null],null,[[[1,\"          \"],[8,[39,5],null,[[\"@historyItem\",\"@onRestore\",\"@isCurrentVersion\"],[[30,1],[28,[37,6],[[30,0,[\"restoreHistoryItem\"]]],null],[28,[37,7],[[28,[37,8],[[30,2],0],null],[28,[37,8],[[30,0,[\"page\"]],0],null]],null]]],null],[1,\"\\n\"]],[1,2]],[[[1,\"          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[14,\"colspan\",\"4\"],[12],[1,\"Geen aanpassingen gevonden\"],[13],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"]],[]]]]],[1,\"\\n\"],[41,[28,[37,9],[[30,0,[\"history\",\"length\"]],0],null],[[[1,\"      \"],[8,[39,10],null,[[\"@pageSize\",\"@page\",\"@totalItems\",\"@toNextPage\",\"@toPreviousPage\"],[[30,0,[\"size\"]],[30,0,[\"page\"]],[30,0,[\"totalCount\"]],[30,0,[\"toNextPage\"]],[30,0,[\"toPreviousPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[18,3,null],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"historyItem\",\"index\",\"&default\"],false,[\"if\",\"semantic-forms/table-skeleton\",\"au-table\",\"each\",\"-track-array\",\"semantic-forms/history-row\",\"perform\",\"and\",\"eq\",\"gt\",\"shared/table-pagination\",\"yield\"]]",
+    "id": "8+jOC5Bj",
+    "block": "[[[10,0],[14,0,\"semantic-forms-history\"],[12],[1,\"\\n\"],[41,[30,0,[\"fetchCurrentHistoryPage\",\"isRunning\"]],[[[1,\"    \"],[8,[39,1],null,[[\"@columns\",\"@rows\"],[4,[30,0,[\"size\"]]]],null],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,2],null,[[\"@size\"],[[30,0,[\"size\"]]]],[[\"header\",\"body\"],[[[[1,\"\\n        \"],[10,\"tr\"],[12],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Tijdstip\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Gebruiker\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Aanpassing\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]],[[[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"history\"]]],null]],null],null,[[[1,\"          \"],[8,[39,5],null,[[\"@historyItem\",\"@onRestore\",\"@isCurrentVersion\"],[[30,1],[28,[37,6],[[30,0,[\"restoreHistoryItem\"]]],null],[28,[37,7],[[28,[37,8],[[30,2],0],null],[28,[37,8],[[30,0,[\"page\"]],0],null]],null]]],null],[1,\"\\n\"]],[1,2]],[[[1,\"          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[14,\"colspan\",\"4\"],[12],[1,\"Geen aanpassingen gevonden\"],[13],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"]],[]]]]],[1,\"\\n\"],[41,[28,[37,9],[[30,0,[\"history\",\"length\"]],0],null],[[[1,\"      \"],[8,[39,10],null,[[\"@pageSize\",\"@page\",\"@totalItems\",\"@toNextPage\",\"@toPreviousPage\"],[[30,0,[\"size\"]],[30,0,[\"page\"]],[30,0,[\"totalCount\"]],[30,0,[\"toNextPage\"]],[30,0,[\"toPreviousPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[18,3,null],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"historyItem\",\"index\",\"&default\"],false,[\"if\",\"semantic-forms/table-skeleton\",\"au-table\",\"each\",\"-track-array\",\"semantic-forms/history-row\",\"perform\",\"and\",\"eq\",\"gt\",\"semantic-forms/table-pagination\",\"yield\"]]",
     "moduleName": "semantic-forms/components/semantic-forms/history.hbs",
     "isStrictMode": false
   });
@@ -56345,6 +56345,7 @@ define("ember-resolver/features", [], function () {
       _initializerDefineProperty(this, "forceShowErrors", _descriptor8, this);
       _initializerDefineProperty(this, "showEditButtons", _descriptor9, this);
       _initializerDefineProperty(this, "isSaveHistoryModalOpen", _descriptor10, this);
+      _defineProperty(this, "createdAt", null);
       _defineProperty(this, "formStore", null);
       _defineProperty(this, "savedTriples", null);
       _defineProperty(this, "formId", `form-${(0, _internals.guidFor)(this)}`);
@@ -56375,6 +56376,7 @@ define("ember-resolver/features", [], function () {
         keepLatest: true
       }, "save", null));
       _defineProperty(this, "setupForm", () => {
+        this.createdAt = new Date();
         this.setupFormForTtl.perform(this.args.initialFormTtl?.current);
       });
       _defineProperty(this, "setupFormForTtl", (0, _asyncArrowRuntime.buildTask)(() => ({
@@ -56466,7 +56468,10 @@ define("ember-resolver/features", [], function () {
         if (this.savedTriples === this.sourceTriples) {
           this.semanticFormDirtyState.markClean(this.formId);
           this.hasChanges = false;
-        } else {
+        } else if (new Date().getTime() - this.createdAt.getTime() > 200) {
+          this.semanticFormDirtyState.markDirty(this.formId);
+          this.hasChanges = true;
+        } else if (this.args.initialFormTtl?.current) {
           this.semanticFormDirtyState.markDirty(this.formId);
           this.hasChanges = true;
         }
@@ -56618,6 +56623,7 @@ define("ember-resolver/features", [], function () {
       _initializerDefineProperty(this, "errorMessage", _descriptor5, this);
       _initializerDefineProperty(this, "formInfo", _descriptor6, this);
       _initializerDefineProperty(this, "forceShowErrors", _descriptor7, this);
+      _defineProperty(this, "createdAt", null);
       _defineProperty(this, "formStore", null);
       _defineProperty(this, "savedTriples", null);
       _defineProperty(this, "formId", `form-${(0, _internals.guidFor)(this)}`);
@@ -56651,6 +56657,7 @@ define("ember-resolver/features", [], function () {
       _defineProperty(this, "setupNewForm", (0, _asyncArrowRuntime.buildTask)(() => ({
         context: this,
         generator: function* () {
+          this.createdAt = new Date();
           const form = this.args.form;
           const uri = `${form.prefix}${(0, _uuid.v4)()}`;
           const sourceTtl = this.args.buildSourceTtl ? yield this.args.buildSourceTtl(uri) : '';
@@ -56695,7 +56702,7 @@ define("ember-resolver/features", [], function () {
         }
         if (this.savedTriples === this.sourceTriples) {
           this.semanticFormDirtyState.markClean(this.formId);
-        } else {
+        } else if (new Date().getTime() - this.createdAt.getTime() > 200) {
           this.semanticFormDirtyState.markDirty(this.formId);
         }
       };
@@ -56755,8 +56762,7 @@ define("ember-resolver/features", [], function () {
   0; //eaimeta@70e063a35619d71f0,"@ember/component/template-only",0,"@ember/template-factory",0,"@ember/component"eaimeta@70e063a35619d71f
   const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
   /*
-    <AuModalContainer />
-  <AuModal
+    <AuModal
     @id="form-history"
     @closeModal={{fn (mut @isModalOpen) false}}
     @modalOpen={{@isModalOpen}}
@@ -56786,14 +56792,91 @@ define("ember-resolver/features", [], function () {
       </AuToolbar>
     </Modal.Footer>
   </AuModal>
+  
   */
   {
-    "id": "z/KxiKJF",
-    "block": "[[[8,[39,0],null,null,null],[1,\"\\n\"],[8,[39,1],[[24,0,\"small\"]],[[\"@id\",\"@closeModal\",\"@modalOpen\",\"@title\"],[\"form-history\",[28,[37,2],[[28,[37,3],[[30,1]],null],false],null],[30,1],\"Beschrijving doorgevoerde wijzigingen.\"]],[[\"default\"],[[[[1,\"\\n  \"],[8,[30,2,[\"Body\"]],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[39,4],[[24,\"placeholder\",\"Beschrijving wijzigingen\"],[4,[38,5],[\"input\",[30,3]],null]],[[\"@id\",\"@width\"],[\"history-message\",\"block\"]],null],[1,\"\\n  \"]],[]]]]],[1,\"\\n  \"],[8,[30,2,[\"Footer\"]],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[39,6],null,null,[[\"default\"],[[[[1,\"\\n      \"],[8,[30,4],null,null,[[\"default\"],[[[[1,\"\\n        \"],[8,[39,7],[[4,[38,5],[\"click\",[30,6]],null]],[[\"@loading\",\"@loadingMessage\"],[[30,5],\"Aan het opslaan\"]],[[\"default\"],[[[[1,\"\\n          Bevestig\\n        \"]],[]]]]],[1,\"\\n      \"]],[]]]]],[1,\"\\n    \"]],[4]]]]],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[2]]]]]],[\"@isModalOpen\",\"Modal\",\"@updateValue\",\"Group\",\"@isSaving\",\"@save\"],false,[\"au-modal-container\",\"au-modal\",\"fn\",\"mut\",\"au-input\",\"on\",\"au-toolbar\",\"au-button\"]]",
+    "id": "boPP33qz",
+    "block": "[[[8,[39,0],[[24,0,\"small\"]],[[\"@id\",\"@closeModal\",\"@modalOpen\",\"@title\"],[\"form-history\",[28,[37,1],[[28,[37,2],[[30,1]],null],false],null],[30,1],\"Beschrijving doorgevoerde wijzigingen.\"]],[[\"default\"],[[[[1,\"\\n  \"],[8,[30,2,[\"Body\"]],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[39,3],[[24,\"placeholder\",\"Beschrijving wijzigingen\"],[4,[38,4],[\"input\",[30,3]],null]],[[\"@id\",\"@width\"],[\"history-message\",\"block\"]],null],[1,\"\\n  \"]],[]]]]],[1,\"\\n  \"],[8,[30,2,[\"Footer\"]],null,null,[[\"default\"],[[[[1,\"\\n    \"],[8,[39,5],null,null,[[\"default\"],[[[[1,\"\\n      \"],[8,[30,4],null,null,[[\"default\"],[[[[1,\"\\n        \"],[8,[39,6],[[4,[38,4],[\"click\",[30,6]],null]],[[\"@loading\",\"@loadingMessage\"],[[30,5],\"Aan het opslaan\"]],[[\"default\"],[[[[1,\"\\n          Bevestig\\n        \"]],[]]]]],[1,\"\\n      \"]],[]]]]],[1,\"\\n    \"]],[4]]]]],[1,\"\\n  \"]],[]]]]],[1,\"\\n\"]],[2]]]]],[1,\"\\n\"]],[\"@isModalOpen\",\"Modal\",\"@updateValue\",\"Group\",\"@isSaving\",\"@save\"],false,[\"au-modal\",\"fn\",\"mut\",\"au-input\",\"on\",\"au-toolbar\",\"au-button\"]]",
     "moduleName": "semantic-forms/components/semantic-forms/save-with-history.hbs",
     "isStrictMode": false
   });
   var _default = _exports.default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
+});
+;define("semantic-forms/components/semantic-forms/table-pagination", ["exports", "@ember/component", "@glimmer/component", "@ember/template-factory"], function (_exports, _component, _component2, _templateFactory) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"@glimmer/component",0,"@ember/template-factory",0,"@ember/component"eaimeta@70e063a35619d71f
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    <div class="au-c-pagination au-u-padding-small">
+    <p>
+      <span class="au-u-hidden-visually">Rij </span><strong>{{this.startItem}}
+        -
+        {{this.endItem}}</strong>
+      van
+      {{@totalItems}}
+    </p>
+    {{yield}}
+    <ul class="au-c-pagination__list">
+      {{#if this.hasMultiplePages}}
+        {{#unless this.isFirstPage}}
+          <li class="au-c-pagination__list-item">
+            <AuButton
+              @skin="link"
+              @icon="nav-left"
+              {{on "click" @toPreviousPage}}
+            >
+              vorige
+              <span class="au-u-hidden-visually"> {{@pageSize}} rijen</span>
+            </AuButton>
+          </li>
+        {{/unless}}
+        {{#unless this.isLastPage}}
+          <li class="au-c-pagination__list-item">
+            <AuButton
+              @skin="link"
+              @icon="nav-right"
+              @iconAlignment="right"
+              {{on "click" @toNextPage}}
+            >
+              volgende
+              <span class="au-u-hidden-visually"> {{@pageSize}} rijen</span>
+            </AuButton>
+          </li>
+        {{/unless}}
+      {{/if}}
+    </ul>
+  </div>
+  */
+  {
+    "id": "M8crmDOv",
+    "block": "[[[10,0],[14,0,\"au-c-pagination au-u-padding-small\"],[12],[1,\"\\n  \"],[10,2],[12],[1,\"\\n    \"],[10,1],[14,0,\"au-u-hidden-visually\"],[12],[1,\"Rij \"],[13],[10,\"strong\"],[12],[1,[30,0,[\"startItem\"]]],[1,\"\\n      -\\n      \"],[1,[30,0,[\"endItem\"]]],[13],[1,\"\\n    van\\n    \"],[1,[30,1]],[1,\"\\n  \"],[13],[1,\"\\n  \"],[18,5,null],[1,\"\\n  \"],[10,\"ul\"],[14,0,\"au-c-pagination__list\"],[12],[1,\"\\n\"],[41,[30,0,[\"hasMultiplePages\"]],[[[41,[51,[30,0,[\"isFirstPage\"]]],[[[1,\"        \"],[10,\"li\"],[14,0,\"au-c-pagination__list-item\"],[12],[1,\"\\n          \"],[8,[39,3],[[4,[38,4],[\"click\",[30,2]],null]],[[\"@skin\",\"@icon\"],[\"link\",\"nav-left\"]],[[\"default\"],[[[[1,\"\\n            vorige\\n            \"],[10,1],[14,0,\"au-u-hidden-visually\"],[12],[1,\" \"],[1,[30,3]],[1,\" rijen\"],[13],[1,\"\\n          \"]],[]]]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null],[41,[51,[30,0,[\"isLastPage\"]]],[[[1,\"        \"],[10,\"li\"],[14,0,\"au-c-pagination__list-item\"],[12],[1,\"\\n          \"],[8,[39,3],[[4,[38,4],[\"click\",[30,4]],null]],[[\"@skin\",\"@icon\",\"@iconAlignment\"],[\"link\",\"nav-right\",\"right\"]],[[\"default\"],[[[[1,\"\\n            volgende\\n            \"],[10,1],[14,0,\"au-u-hidden-visually\"],[12],[1,\" \"],[1,[30,3]],[1,\" rijen\"],[13],[1,\"\\n          \"]],[]]]]],[1,\"\\n        \"],[13],[1,\"\\n\"]],[]],null]],[]],null],[1,\"  \"],[13],[1,\"\\n\"],[13]],[\"@totalItems\",\"@toPreviousPage\",\"@pageSize\",\"@toNextPage\",\"&default\"],false,[\"yield\",\"if\",\"unless\",\"au-button\",\"on\"]]",
+    "moduleName": "semantic-forms/components/semantic-forms/table-pagination.hbs",
+    "isStrictMode": false
+  });
+  class SharedTablePaginationComponent extends _component2.default {
+    get startItem() {
+      return this.args.page * this.args.pageSize + 1;
+    }
+    get isFirstPage() {
+      return this.startItem === 1;
+    }
+    get isLastPage() {
+      return this.args.page * this.args.pageSize + this.args.pageSize >= this.args.totalItems;
+    }
+    get hasMultiplePages() {
+      return !this.isFirstPage || !this.isLastPage;
+    }
+    get endItem() {
+      return Math.min(this.args.page * this.args.pageSize + this.args.pageSize, this.args.totalItems);
+    }
+  }
+  _exports.default = SharedTablePaginationComponent;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, SharedTablePaginationComponent);
 });
 ;define("semantic-forms/components/semantic-forms/table-skeleton", ["exports", "@ember/component", "@glimmer/component", "@ember/template-factory"], function (_exports, _component, _component2, _templateFactory) {
   "use strict";
