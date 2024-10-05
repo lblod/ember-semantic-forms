@@ -26,7 +26,7 @@
       </:body>
     </AuTable>
     {{#if (gt this.history.length 0)}}
-      <Shared::TablePagination
+      <SemanticForms::TablePagination
         @pageSize={{this.size}}
         @page={{this.page}}
         @totalItems={{this.totalCount}}
