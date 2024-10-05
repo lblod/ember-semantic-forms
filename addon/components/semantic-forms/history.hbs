@@ -1,6 +1,6 @@
 <div class="semantic-forms-history">
   {{#if this.fetchCurrentHistoryPage.isRunning}}
-    <SemantiForms::TableSkeleton @columns={{4}} @rows={{this.size}} />
+    <SemanticForms::TableSkeleton @columns={{4}} @rows={{this.size}} />
   {{else}}
     <AuTable @size={{this.size}}>
       <:header>
