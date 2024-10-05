@@ -6,10 +6,10 @@ import { service } from '@ember/service';
 
 export default class FormTripleContentComponent extends Component {
   @tracked expanded = false;
-  @service formRepository;
+  @service semanticFormRepository;
 
   get showSourceTriples() {
-    return this.formRepository.showSourceTriples;
+    return this.semanticFormRepository.showSourceTriples;
   }
 
   @action

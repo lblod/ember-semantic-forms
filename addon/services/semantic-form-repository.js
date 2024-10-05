@@ -13,7 +13,7 @@ class Definition extends EmberObject {
   withHistory = false;
 }
 
-export default class FormRepositoryService extends Service {
+export default class SemanticFormRepositoryService extends Service {
   @tracked showSourceTriples;
 
   definitions = {};
