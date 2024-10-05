@@ -56118,7 +56118,7 @@ define("ember-resolver/features", [], function () {
   /*
     <div class="semantic-forms-history">
     {{#if this.fetchCurrentHistoryPage.isRunning}}
-      <Skeleton::Table @columns={{4}} @rows={{this.size}} />
+      <SemantiForms::TableSkeleton @columns={{4}} @rows={{this.size}} />
     {{else}}
       <AuTable @size={{this.size}}>
         <:header>
@@ -56156,10 +56156,11 @@ define("ember-resolver/features", [], function () {
       {{yield}}
     {{/if}}
   </div>
+  
   */
   {
-    "id": "W7MPhHzz",
-    "block": "[[[10,0],[14,0,\"semantic-forms-history\"],[12],[1,\"\\n\"],[41,[30,0,[\"fetchCurrentHistoryPage\",\"isRunning\"]],[[[1,\"    \"],[8,[39,1],null,[[\"@columns\",\"@rows\"],[4,[30,0,[\"size\"]]]],null],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,2],null,[[\"@size\"],[[30,0,[\"size\"]]]],[[\"header\",\"body\"],[[[[1,\"\\n        \"],[10,\"tr\"],[12],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Tijdstip\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Gebruiker\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Aanpassing\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]],[[[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"history\"]]],null]],null],null,[[[1,\"          \"],[8,[39,5],null,[[\"@historyItem\",\"@onRestore\",\"@isCurrentVersion\"],[[30,1],[28,[37,6],[[30,0,[\"restoreHistoryItem\"]]],null],[28,[37,7],[[28,[37,8],[[30,2],0],null],[28,[37,8],[[30,0,[\"page\"]],0],null]],null]]],null],[1,\"\\n\"]],[1,2]],[[[1,\"          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[14,\"colspan\",\"4\"],[12],[1,\"Geen aanpassingen gevonden\"],[13],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"]],[]]]]],[1,\"\\n\"],[41,[28,[37,9],[[30,0,[\"history\",\"length\"]],0],null],[[[1,\"      \"],[8,[39,10],null,[[\"@pageSize\",\"@page\",\"@totalItems\",\"@toNextPage\",\"@toPreviousPage\"],[[30,0,[\"size\"]],[30,0,[\"page\"]],[30,0,[\"totalCount\"]],[30,0,[\"toNextPage\"]],[30,0,[\"toPreviousPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[18,3,null],[1,\"\\n\"]],[]]],[13]],[\"historyItem\",\"index\",\"&default\"],false,[\"if\",\"skeleton/table\",\"au-table\",\"each\",\"-track-array\",\"semantic-forms/history-row\",\"perform\",\"and\",\"eq\",\"gt\",\"shared/table-pagination\",\"yield\"]]",
+    "id": "Jinkn2qN",
+    "block": "[[[10,0],[14,0,\"semantic-forms-history\"],[12],[1,\"\\n\"],[41,[30,0,[\"fetchCurrentHistoryPage\",\"isRunning\"]],[[[1,\"    \"],[8,[39,1],null,[[\"@columns\",\"@rows\"],[4,[30,0,[\"size\"]]]],null],[1,\"\\n\"]],[]],[[[1,\"    \"],[8,[39,2],null,[[\"@size\"],[[30,0,[\"size\"]]]],[[\"header\",\"body\"],[[[[1,\"\\n        \"],[10,\"tr\"],[12],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Tijdstip\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Gebruiker\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[1,\"Aanpassing\"],[13],[1,\"\\n          \"],[10,\"th\"],[12],[13],[1,\"\\n        \"],[13],[1,\"\\n      \"]],[]],[[[1,\"\\n\"],[42,[28,[37,4],[[28,[37,4],[[30,0,[\"history\"]]],null]],null],null,[[[1,\"          \"],[8,[39,5],null,[[\"@historyItem\",\"@onRestore\",\"@isCurrentVersion\"],[[30,1],[28,[37,6],[[30,0,[\"restoreHistoryItem\"]]],null],[28,[37,7],[[28,[37,8],[[30,2],0],null],[28,[37,8],[[30,0,[\"page\"]],0],null]],null]]],null],[1,\"\\n\"]],[1,2]],[[[1,\"          \"],[10,\"tr\"],[12],[1,\"\\n            \"],[10,\"td\"],[14,\"colspan\",\"4\"],[12],[1,\"Geen aanpassingen gevonden\"],[13],[1,\"\\n          \"],[13],[1,\"\\n\"]],[]]],[1,\"      \"]],[]]]]],[1,\"\\n\"],[41,[28,[37,9],[[30,0,[\"history\",\"length\"]],0],null],[[[1,\"      \"],[8,[39,10],null,[[\"@pageSize\",\"@page\",\"@totalItems\",\"@toNextPage\",\"@toPreviousPage\"],[[30,0,[\"size\"]],[30,0,[\"page\"]],[30,0,[\"totalCount\"]],[30,0,[\"toNextPage\"]],[30,0,[\"toPreviousPage\"]]]],null],[1,\"\\n\"]],[]],null],[1,\"\\n    \"],[18,3,null],[1,\"\\n\"]],[]]],[13],[1,\"\\n\"]],[\"historyItem\",\"index\",\"&default\"],false,[\"if\",\"semanti-forms/table-skeleton\",\"au-table\",\"each\",\"-track-array\",\"semantic-forms/history-row\",\"perform\",\"and\",\"eq\",\"gt\",\"shared/table-pagination\",\"yield\"]]",
     "moduleName": "semantic-forms/components/semantic-forms/history.hbs",
     "isStrictMode": false
   });
@@ -56793,6 +56794,55 @@ define("ember-resolver/features", [], function () {
     "isStrictMode": false
   });
   var _default = _exports.default = (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, (0, _templateOnly.default)());
+});
+;define("semantic-forms/components/semantic-forms/table-skeleton", ["exports", "@ember/component", "@glimmer/component", "@ember/template-factory"], function (_exports, _component, _component2, _templateFactory) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  0; //eaimeta@70e063a35619d71f0,"@glimmer/component",0,"@ember/template-factory",0,"@ember/component"eaimeta@70e063a35619d71f
+  const __COLOCATED_TEMPLATE__ = (0, _templateFactory.createTemplateFactory)(
+  /*
+    {{! template-lint-disable no-unused-block-params }}
+  <AuTable>
+    <:header>
+      <tr>
+        {{#each this.columns as |column|}}
+          <th
+            class="skeleton-text au-u-padding-left au-u-padding-right au-u-padding-bottom-small au-u-padding-top-small"
+          ><p class="skeleton-text"></p></th>
+        {{/each}}
+      </tr>
+    </:header>
+    <:body>
+      {{#each this.rows as |row|}}
+        <tr>
+          {{#each this.columns as |column|}}
+            <td><p class="skeleton-text au-u-padding-small"></p></td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </:body>
+  </AuTable>
+  */
+  {
+    "id": "YgtTwATz",
+    "block": "[[[8,[39,0],null,null,[[\"header\",\"body\"],[[[[1,\"\\n    \"],[10,\"tr\"],[12],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"columns\"]]],null]],null],null,[[[1,\"        \"],[10,\"th\"],[14,0,\"skeleton-text au-u-padding-left au-u-padding-right au-u-padding-bottom-small au-u-padding-top-small\"],[12],[10,2],[14,0,\"skeleton-text\"],[12],[13],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n  \"]],[]],[[[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"rows\"]]],null]],null],null,[[[1,\"      \"],[10,\"tr\"],[12],[1,\"\\n\"],[42,[28,[37,2],[[28,[37,2],[[30,0,[\"columns\"]]],null]],null],null,[[[1,\"          \"],[10,\"td\"],[12],[10,2],[14,0,\"skeleton-text au-u-padding-small\"],[12],[13],[13],[1,\"\\n\"]],[3]],null],[1,\"      \"],[13],[1,\"\\n\"]],[2]],null],[1,\"  \"]],[]]]]]],[\"column\",\"row\",\"column\"],false,[\"au-table\",\"each\",\"-track-array\"]]",
+    "moduleName": "semantic-forms/components/semantic-forms/table-skeleton.hbs",
+    "isStrictMode": false
+  });
+  class SkeletonTableComponent extends _component2.default {
+    get columns() {
+      return new Array(this.args.columns ?? 1);
+    }
+    get rows() {
+      return new Array(this.args.rows ?? 1);
+    }
+  }
+  _exports.default = SkeletonTableComponent;
+  (0, _component.setComponentTemplate)(__COLOCATED_TEMPLATE__, SkeletonTableComponent);
 });
 ;define("semantic-forms/components/semantic-forms/triple-content", ["exports", "@ember/component", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/service", "@ember/template-factory"], function (_exports, _component, _component2, _tracking, _object, _service, _templateFactory) {
   "use strict";
