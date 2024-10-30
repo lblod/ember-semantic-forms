@@ -173,4 +173,55 @@ export default class SemanticFormRepositoryService extends Service {
     store.parse(metaTtl || '', metaGraph, 'text/turtle');
     store.parse(sourceTtl || '', sourceGraph, 'text/turtle');
   }
+
+  async fetchInstances(formDefinition, options = {}) {
+    const { page = 0, size = 20, sort = '', filter = '' } = options;
+    const id = formDefinition.id;
+    const response = await fetch(
+      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`
+    );
+    if (!response.ok) {
+      let error = new Error(response.statusText);
+      error.status = response.status;
+      throw error;
+    }
+    const { instances } = await response.json();
+    instances.meta = instances.meta || {};
+    instances.meta.count = parseInt(response.headers.get('X-Total-Count'), 10);
+    instances.meta.pagination = {
+      first: {
+        number: 0,
+      },
+      self: {
+        number: page,
+        size: size,
+      },
+      last: {
+        number: Math.floor(instances.meta.count / size),
+      },
+    };
+    if (page && page > 0) {
+      instances.meta.pagination.prev = {
+        number: page - 1,
+        size: size,
+      };
+    }
+    if (page * size < instances.meta.count) {
+      instances.meta.pagination.next = {
+        number: page + 1,
+        size: size,
+      };
+    }
+
+    let headers = [];
+    if (instances.length > 0) {
+      headers = Object.keys(instances[0]);
+    }
+
+    return {
+      instances,
+      formDefinition,
+      headers,
+    };
+  }
 }
