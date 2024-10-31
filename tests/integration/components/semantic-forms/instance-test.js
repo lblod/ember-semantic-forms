@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | form/instance', function (hooks) {
+module('Integration | Component | semantic-forms/instance', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {

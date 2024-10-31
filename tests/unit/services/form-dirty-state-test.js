@@ -6,7 +6,7 @@ module('Unit | Service | form-dirty-state', function (hooks) {
 
   // TODO: Replace this with your real tests.
   test('it exists', function (assert) {
-    let service = this.owner.lookup('service:form-dirty-state');
+    let service = this.owner.lookup('service:semantic-form-dirty-state');
     assert.ok(service);
   });
 });
