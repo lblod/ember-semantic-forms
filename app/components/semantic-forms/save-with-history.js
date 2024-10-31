@@ -1,1 +1,1 @@
-export { default } from 'semantic-forms/components/semantic-forms/save-with-history';
+export { default } from '@lblod/ember-semantic-forms/components/semantic-forms/save-with-history';

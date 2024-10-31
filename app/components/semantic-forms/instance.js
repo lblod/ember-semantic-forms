@@ -1,1 +1,1 @@
-export { default } from 'semantic-forms/components/semantic-forms/instance';
+export { default } from '@lblod/ember-semantic-forms/components/semantic-forms/instance';

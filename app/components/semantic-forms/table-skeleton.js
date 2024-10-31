@@ -1,1 +1,1 @@
-export { default } from 'semantic-forms/components/semantic-forms/table-skeleton';
+export { default } from '@lblod/ember-semantic-forms/components/semantic-forms/table-skeleton';
