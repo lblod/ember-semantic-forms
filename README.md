@@ -11,7 +11,7 @@ This ember addon offers frontend-side components and services to work with forms
 ## Installation
 
 ```
-ember install semantic-forms
+ember install @lblod/ember-semantic-forms
 ```
 
 ## Usage
