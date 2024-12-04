@@ -18,11 +18,13 @@
 /.gitignore
 /.prettierignore
 /.prettierrc.js
+/.release-it.json
 /.stylelintignore
 /.stylelintrc.js
 /.template-lintrc.js
 /.travis.yml
 /.watchmanconfig
+/.woodpecker/
 /bower.json
 /CONTRIBUTING.md
 /ember-cli-build.js
