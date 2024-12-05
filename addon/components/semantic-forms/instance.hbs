@@ -1,11 +1,14 @@
 {{(this.setupForm)}}
 <div class="semantic-forms-instance">
-  {{#unless this.setupFormForTtl.isRunning}}
+
+  {{#if this.setupFormForTtl.isRunning}}
+    {{yield to="formIsLoading"}}
+  {{else}}
     <section>
       <RdfForm
         @groupClass="au-o-grid__item"
         @form={{this.formInfo.formNode}}
-        @show={{false}}
+        @show={{@show}}
         @graphs={{this.formInfo.graphs}}
         @sourceNode={{this.formInfo.sourceNode}}
         @formStore={{this.formInfo.formStore}}
@@ -13,7 +16,7 @@
         @useNewListingLayout={{true}}
         @lazyGenerators={{true}}
         @level={{2}}
-        class="au-u-max-width-medium"
+        class={{if @formClass @formClass "au-u-max-width-medium" }}
       />
       {{yield}}
     </section>
