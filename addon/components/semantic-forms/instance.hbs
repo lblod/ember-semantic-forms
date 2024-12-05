@@ -27,27 +27,32 @@
       </AuAlert>
     {{/if}}
 
-    <AuToolbar as |Group|>
-      <Group>
-        <AuButtonGroup>
-          <AuButton
-            {{on "click" this.tryOpenHistoryModal}}
-            @disabled={{or this.save.isRunning (not this.hasChanges)}}
-          >{{this.saveTitle}}</AuButton>
-          <SemanticForms::SaveWithHistory
-            @save={{perform this.save}}
-            @isSaving={{this.save.isRunning}}
-            @updateValue={{this.updateHistoryMessage}}
-            @isModalOpen={{this.isSaveHistoryModalOpen}}
-          >{{this.saveTitle}}</SemanticForms::SaveWithHistory>
-          {{#if @onCancel}}
-            <SemanticForms::CancelWithConfirm
-              @cancel={{@onCancel}}
-            >Annuleer</SemanticForms::CancelWithConfirm>
-          {{/if}}
-        </AuButtonGroup>
-      </Group>
-    </AuToolbar>
+
+    {{#unless @show}}
+      <AuToolbar as |Group|>
+        <Group>
+          <AuButtonGroup>
+            <AuButton
+              {{on "click" this.tryOpenHistoryModal}}
+              @disabled={{or this.save.isRunning (not this.hasChanges)}}
+              @loading={{this.save.isRunning}}
+              @loadingMessage={{this.saveTitle}}
+            >{{this.saveTitle}}</AuButton>
+            <SemanticForms::SaveWithHistory
+              @save={{perform this.save}}
+              @isSaving={{this.save.isRunning}}
+              @updateValue={{this.updateHistoryMessage}}
+              @isModalOpen={{this.isSaveHistoryModalOpen}}
+            >{{this.saveTitle}}</SemanticForms::SaveWithHistory>
+            {{#if @onCancel}}
+              <SemanticForms::CancelWithConfirm
+                @cancel={{@onCancel}}
+              >Annuleer</SemanticForms::CancelWithConfirm>
+            {{/if}}
+          </AuButtonGroup>
+        </Group>
+      </AuToolbar>
+    {{/unless}}
 
     <SemanticForms::TripleContent @triples={{this.sourceTriples}} />
   {{/if}}
