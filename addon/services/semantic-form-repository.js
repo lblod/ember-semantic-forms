@@ -116,9 +116,9 @@ export default class SemanticFormRepositoryService extends Service {
     return form;
   };
 
-  async getFormDefinition(formId) {
+  async getFormDefinition(formId, noCache = false) {
     const definition = this.definitions[formId];
-    if (definition) {
+    if (definition && !noCache) {
       return definition;
     }
 
