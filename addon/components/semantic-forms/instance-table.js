@@ -1,20 +1,27 @@
 import Component from '@glimmer/component';
 
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
 import { JSON_API_TYPE } from 'frontend-lmb/utils/constants';
 
+import { timeout, restartableTask } from 'ember-concurrency';
+
 export default class FormInstanceTableComponent extends Component {
   @service store;
   @service semanticFormRepository;
 
   @tracked formInfo = null;
+  @tracked labels = A();
 
   constructor() {
     super(...arguments);
-    this.onInit();
+    this.labels.clear();
+    this.labels.push(...this.args.labels ?? [])
+    this.loadTable();
+    this.refreshTable.perform();
   }
 
   get initialized() {
@@ -44,16 +51,40 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   @action
-  async onInit() {
-    const form = this.args.formDefinition;
-
-    const formInfo = await this.semanticFormRepository.fetchInstances(form, {
+  async loadTable() {
+    const formInfo = await this.semanticFormRepository.fetchInstances(this.args.formDefinition, {
       page: this.args.page,
       size: this.args.size,
       sort: this.args.sort,
       filter: this.args.filter,
+      labels: this.labels,
     });
 
     this.formInfo = formInfo;
+  }
+
+  refreshTable = restartableTask(async () => {
+    await timeout(250);
+    if(this.areLabelsUpdated) {
+      this.labels.clear();
+      this.labels.push(...this.args.labels);
+      await this.loadTable();
+    }
+    this.refreshTable.perform();
+  });
+
+  @action filterRow(instance) {
+    return Object.fromEntries(
+      Object.entries(instance).filter(([key]) => this.labels.map(l => l.name).includes(key))
+    );
+  }
+
+  get areLabelsUpdated() {
+    return this.labels.length !== this.args.labels.length ?? null;
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.refreshTable.cancelAll();
   }
 }

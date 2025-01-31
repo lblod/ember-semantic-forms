@@ -47,9 +47,11 @@
       </c.header>
 
       <c.body as |row|>
-        {{#each-in row as |key value|}}
-          <td class="au-u-word-break">{{value}}</td>
-        {{/each-in}}
+        {{#let (this.filterRow row) as |instance|}}
+          {{#each-in instance as |key value|}}
+            <td class="au-u-word-break">{{value}}</td>
+          {{/each-in}}
+        {{/let}}
         <td>
           <LinkTo @route={{@editRoute}} @model={{row.id}} class="au-c-link">
             <AuIcon @icon="pencil" @alignment="left" />

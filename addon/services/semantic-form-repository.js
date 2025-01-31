@@ -175,10 +175,19 @@ export default class SemanticFormRepositoryService extends Service {
   }
 
   async fetchInstances(formDefinition, options = {}) {
-    const { page = 0, size = 20, sort = '', filter = '' } = options;
+    const { page = 0, size = 20, sort = '', filter = '', labels = [] } = options;
     const id = formDefinition.id;
     const response = await fetch(
-      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`
+      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': JSON_API_TYPE,
+        },
+        body: JSON.stringify({
+          labels,
+        }),
+      }
     );
     if (!response.ok) {
       let error = new Error(response.statusText);
@@ -213,15 +222,11 @@ export default class SemanticFormRepositoryService extends Service {
       };
     }
 
-    let headers = [];
-    if (instances.length > 0) {
-      headers = Object.keys(instances[0]);
-    }
 
     return {
       instances,
       formDefinition,
-      headers,
+      headers: labels.map(l => l.name),
     };
   }
 }
