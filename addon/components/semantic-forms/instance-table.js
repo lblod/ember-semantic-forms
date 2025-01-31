@@ -18,8 +18,7 @@ export default class FormInstanceTableComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.labels.clear();
-    this.labels.push(...this.args.labels ?? [])
+    this.labels.push(...this.args.labels);
     this.loadTable();
     this.refreshTable.perform();
   }
@@ -86,5 +85,6 @@ export default class FormInstanceTableComponent extends Component {
   willDestroy() {
     super.willDestroy(...arguments);
     this.refreshTable.cancelAll();
+    this.labels.clear();
   }
 }
