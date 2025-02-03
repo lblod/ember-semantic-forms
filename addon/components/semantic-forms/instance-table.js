@@ -51,21 +51,24 @@ export default class FormInstanceTableComponent extends Component {
 
   @action
   async loadTable() {
-    const formInfo = await this.semanticFormRepository.fetchInstances(this.args.formDefinition, {
-      page: this.args.page,
-      size: this.args.size,
-      sort: this.args.sort,
-      filter: this.args.filter,
-      labels: this.labels,
-    });
+    const formInfo = await this.semanticFormRepository.fetchInstances(
+      this.args.formDefinition,
+      {
+        page: this.args.page,
+        size: this.args.size,
+        sort: this.args.sort,
+        filter: this.args.filter,
+        labels: this.labels,
+      }
+    );
 
     this.formInfo = formInfo;
-    this.args.onTableLoaded()
+    this.args.onTableLoaded();
   }
 
   refreshTable = restartableTask(async () => {
     await timeout(250);
-    if(this.areLabelsUpdated) {
+    if (this.areLabelsUpdated) {
       this.labels.clear();
       this.labels.push(...this.args.labels);
       await this.loadTable();
@@ -75,7 +78,9 @@ export default class FormInstanceTableComponent extends Component {
 
   @action filterRow(instance) {
     return Object.fromEntries(
-      Object.entries(instance).filter(([key]) => this.labels.map(l => l.name).includes(key))
+      Object.entries(instance).filter(([key]) =>
+        this.labels.map((l) => l.name).includes(key)
+      )
     );
   }
 
