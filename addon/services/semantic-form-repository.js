@@ -176,6 +176,7 @@ export default class SemanticFormRepositoryService extends Service {
 
   async fetchInstances(formDefinition, options = {}) {
     const { page = 0, size = 20, sort = '', filter = '', labels = [] } = options;
+    const sortedLabels = labels.sort((a,b) => a.order - b.order);
     const id = formDefinition.id;
     const response = await fetch(
       `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`,
@@ -185,7 +186,7 @@ export default class SemanticFormRepositoryService extends Service {
           'Content-Type': JSON_API_TYPE,
         },
         body: JSON.stringify({
-          labels,
+          labels: sortedLabels,
         }),
       }
     );
@@ -226,7 +227,7 @@ export default class SemanticFormRepositoryService extends Service {
     return {
       instances,
       formDefinition,
-      headers: labels.map(l => l.name),
+      headers: sortedLabels.map(l => l.name),
     };
   }
 }
