@@ -65,7 +65,7 @@ export default class FormInstanceTableComponent extends Component {
 
   refreshTable = restartableTask(async () => {
     await timeout(250);
-    if(this.areLabelsUpdated || this.isOrderOfLabelUpdated) {
+    if(this.areLabelsUpdated) {
       this.labels.clear();
       this.labels.push(...this.args.labels);
       await this.loadTable();
@@ -80,18 +80,7 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   get areLabelsUpdated() {
-    return this.labels.length !== this.args.labels.length ?? null;
-  }
-  get isOrderOfLabelUpdated() {
-    for (const label of this.labels) {
-      const sameLabel = this.args.labels.find(l => l.name === label.name);
-
-      if(!label?.order && sameLabel.order) {
-        return true;
-      }
-      return label.order !== sameLabel?.order
-    }
-    return false
+    return JSON.stringify(this.labels) != JSON.stringify(this.args.labels);
   }
 
   willDestroy() {
