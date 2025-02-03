@@ -35,12 +35,16 @@
   >
     <t.content as |c|>
       <c.header>
-        {{#each this.formInfo.headers as |key|}}
-          <AuDataTableThSortable
-            @field={{key}}
-            @currentSorting={{@sort}}
-            @label={{key}}
-          />
+        {{#each this.formInfo.headers as |header|}}
+          {{#if header.isCustom}}
+            <th>{{header.label}}</th>
+          {{else}}
+            <AuDataTableThSortable
+              @field={{header.key}}
+              @currentSorting={{@sort}}
+              @label={{header.label}}
+            />
+          {{/if}}
         {{/each}}
         <th>{{! Bewerk }}</th>
         <th>{{! Delete }}</th>

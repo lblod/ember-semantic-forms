@@ -232,7 +232,13 @@ export default class SemanticFormRepositoryService extends Service {
     return {
       instances,
       formDefinition,
-      headers: sortedLabels.map((l) => l.name),
+      headers: sortedLabels.map((l) => {
+        return {
+          key: l.var,
+          label: l.name,
+          isCustom: !!l.isCustom,
+        };
+      }),
     };
   }
 }
