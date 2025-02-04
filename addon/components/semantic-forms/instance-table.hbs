@@ -11,12 +11,14 @@
     </Group>
     <Group>
       <AuButtonGroup>
-        <AuLinkExternal
-          role="button"
-          href={{this.downloadLink}}
-          download="instances"
-          @skin="button-secondary"
-        >Download</AuLinkExternal>
+        {{#if @showDownloadButton}}
+          <AuLinkExternal
+            role="button"
+            href={{this.downloadLink}}
+            download="instances"
+            @skin="button-secondary"
+          >Download</AuLinkExternal>
+        {{/if}}
         <AuLink
           @route="forms.form.new"
           @model={{this.formInfo.formDefinition.id}}
