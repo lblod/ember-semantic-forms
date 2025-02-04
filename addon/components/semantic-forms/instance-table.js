@@ -84,6 +84,14 @@ export default class FormInstanceTableComponent extends Component {
     );
   }
 
+  get downloadLink() {
+    if (!this.formInfo?.formDefinition) {
+      return null;
+    }
+    const labelsQueryParam = encodeURIComponent(JSON.stringify(this.labels));
+    return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?labels=${labelsQueryParam}`;
+  }
+
   get areLabelsUpdated() {
     return JSON.stringify(this.labels) != JSON.stringify(this.args.labels);
   }

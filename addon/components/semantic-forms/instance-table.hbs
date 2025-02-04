@@ -1,10 +1,35 @@
 <div {{did-update this.loadTable @page}}>
-  <AuToolbar @size="large" class="au-u-padding-bottom-none" as |Group|>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
     <Group>
       <AuHeading @skin="2">Beheer
         {{this.formInfo.formDefinition.id}}
         Form Instances</AuHeading>
     </Group>
+    <Group>
+      <AuButtonGroup>
+        <AuLinkExternal
+          role="button"
+          href={{this.downloadLink}}
+          download="instances"
+          @skin="button-secondary"
+        >Download</AuLinkExternal>
+        <AuLink
+          @route="forms.form.new"
+          @model={{this.formInfo.formDefinition.id}}
+          @skin="button"
+        >Voeg form instance toe</AuLink>
+      </AuButtonGroup>
+    </Group>
+  </AuToolbar>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
     <Group class="au-u-1-3@medium">
       <AuInput
         value={{@filter}}
@@ -14,13 +39,6 @@
         placeholder="Zoek {{this.formInfo.formDefinition.id}}"
         {{on "input" (perform @search value="target.value")}}
       />
-    </Group>
-    <Group>
-      <AuLink
-        @route="forms.form.new"
-        @model={{this.formInfo.formDefinition.id}}
-        @skin="button"
-      >Voeg form instance toe</AuLink>
     </Group>
   </AuToolbar>
 
