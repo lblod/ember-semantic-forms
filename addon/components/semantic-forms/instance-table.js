@@ -89,7 +89,9 @@ export default class FormInstanceTableComponent extends Component {
       return null;
     }
     const labelsQueryParam = encodeURIComponent(JSON.stringify(this.labels));
-    return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?labels=${labelsQueryParam}`;
+    const sortQueryParam = this.args.sort ?? '';
+
+    return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?sort=${sortQueryParam}&labels=${labelsQueryParam}`;
   }
 
   get areLabelsUpdated() {
