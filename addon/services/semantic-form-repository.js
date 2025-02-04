@@ -183,18 +183,10 @@ export default class SemanticFormRepositoryService extends Service {
       labels = [],
     } = options;
     const sortedLabels = labels.sort((a, b) => a.order - b.order);
+    const labelsQueryParam = encodeURIComponent(JSON.stringify(sortedLabels));
     const id = formDefinition.id;
     const response = await fetch(
-      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': JSON_API_TYPE,
-        },
-        body: JSON.stringify({
-          labels: sortedLabels,
-        }),
-      }
+      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}&labels=${labelsQueryParam}`
     );
     if (!response.ok) {
       let error = new Error(response.statusText);
