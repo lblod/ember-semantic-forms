@@ -11,6 +11,7 @@ import { timeout, restartableTask } from 'ember-concurrency';
 
 export default class FormInstanceTableComponent extends Component {
   @service store;
+  @service toaster;
   @service semanticFormRepository;
 
   @tracked isModalOpen;
@@ -84,6 +85,14 @@ export default class FormInstanceTableComponent extends Component {
         this.labels.map((l) => l.name).includes(key)
       )
     );
+  }
+
+  @action
+  downloadStarted() {
+    this.isModalOpen = false;
+    this.toaster.success('Download instanties gestart', 'Download', {
+      timeOut: 2000,
+    });
   }
 
   get downloadAllLink() {

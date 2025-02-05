@@ -114,14 +114,14 @@
           href={{this.downloadPageLink}}
           download="instances"
           @skin="button"
-          {{on "click" (fn (mut this.isModalOpen) false)}}
+          {{on "click" this.downloadStarted}}
         >Download deze pagina</AuLinkExternal>
         <AuLinkExternal
           role="button"
           href={{this.downloadAllLink}}
           download="instances"
           @skin="button"
-          {{on "click" (fn (mut this.isModalOpen) false)}}
+          {{on "click" this.downloadStarted}}
         >Download</AuLinkExternal>
       </Group>
       <Group>
