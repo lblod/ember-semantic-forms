@@ -68,7 +68,7 @@ export default class FormInstanceTableComponent extends Component {
 
   refreshTable = restartableTask(async () => {
     await timeout(250);
-    if (this.areLabelsUpdated) {
+    if (this.labelsDiverge) {
       this.labels.clear();
       this.labels.push(...this.args.labels);
       await this.loadTable();
@@ -94,8 +94,21 @@ export default class FormInstanceTableComponent extends Component {
     return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?sort=${sortQueryParam}&labels=${labelsQueryParam}`;
   }
 
-  get areLabelsUpdated() {
-    return JSON.stringify(this.labels) != JSON.stringify(this.args.labels);
+  get labelsDiverge() {
+    if (!this.labels || this.args.labels.length !== this.labels.length) {
+      return true;
+    }
+
+    const thisSortedLabels = this.labels
+      .sort((a, b) => a.order - b.order)
+      .map((l) => l.name);
+    const argsSortedLabels = this.args.labels
+      .sort((a, b) => a.order - b.order)
+      .map((l) => l.name);
+
+    return (
+      JSON.stringify(thisSortedLabels) !== JSON.stringify(argsSortedLabels)
+    );
   }
 
   willDestroy() {
