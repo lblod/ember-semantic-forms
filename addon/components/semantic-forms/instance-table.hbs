@@ -12,12 +12,10 @@
     <Group>
       <AuButtonGroup>
         {{#if @showDownloadButton}}
-          <AuLinkExternal
-            role="button"
-            href={{this.downloadLink}}
-            download="instances"
-            @skin="button-secondary"
-          >Download</AuLinkExternal>
+          <AuButton
+            @skin="secondary"
+            {{on "click" (fn (mut this.isModalOpen) true)}}
+          >Download</AuButton>
         {{/if}}
         <AuLink
           @route="forms.form.new"
@@ -93,3 +91,45 @@
     </t.content>
   </AuDataTable>
 </div>
+
+<AuModal
+  @id="download-form-instances"
+  @modalOpen={{this.isModalOpen}}
+  @closeModal={{(fn (mut this.isModalOpen) false)}}
+  class="small"
+  @title="Download instanties"
+  as |Modal|
+>
+  <Modal.Body>
+    <p>
+      Door op download te klikken zal er een csv document beschikbaar gemaakt
+      worden met de huidige kolom configuratie.
+    </p>
+  </Modal.Body>
+  <Modal.Footer>
+    <AuToolbar as |Group|>
+      <Group>
+        <AuLinkExternal
+          role="button"
+          href={{this.downloadPageLink}}
+          download="instances"
+          @skin="button"
+        >Download deze pagina</AuLinkExternal>
+        <AuLinkExternal
+          role="button"
+          href={{this.downloadAllLink}}
+          download="instances"
+          @skin="button"
+        >Download</AuLinkExternal>
+      </Group>
+      <Group>
+        <AuButton
+          @skin="secondary"
+          {{on "click" (fn (mut this.isModalOpen) false)}}
+        >
+          Annuleer
+        </AuButton>
+      </Group>
+    </AuToolbar>
+  </Modal.Footer>
+</AuModal>

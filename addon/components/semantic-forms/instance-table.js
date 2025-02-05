@@ -13,6 +13,8 @@ export default class FormInstanceTableComponent extends Component {
   @service store;
   @service semanticFormRepository;
 
+  @tracked isModalOpen;
+
   @tracked formInfo = null;
   @tracked labels = A();
 
@@ -84,7 +86,7 @@ export default class FormInstanceTableComponent extends Component {
     );
   }
 
-  get downloadLink() {
+  get downloadAllLink() {
     if (!this.formInfo?.formDefinition) {
       return null;
     }
@@ -92,6 +94,13 @@ export default class FormInstanceTableComponent extends Component {
     const sortQueryParam = this.args.sort ?? '';
 
     return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?sort=${sortQueryParam}&labels=${labelsQueryParam}`;
+  }
+
+  get downloadPageLink() {
+    return (
+      this.downloadAllLink +
+      `&page[number]=${this.args.page}&page[size]=${this.args.size}`
+    );
   }
 
   get labelsDiverge() {
