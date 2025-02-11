@@ -129,6 +129,10 @@ export default class FormInstanceTableComponent extends Component {
     );
   }
 
+  get tableTitle() {
+    return this.args.title ?? `${this.formInfo?.formDefinition?.id} beheer`;
+  }
+
   willDestroy() {
     super.willDestroy(...arguments);
     this.refreshTable.cancelAll();

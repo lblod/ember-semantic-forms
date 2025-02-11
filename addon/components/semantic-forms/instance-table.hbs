@@ -5,9 +5,7 @@
     as |Group|
   >
     <Group>
-      <AuHeading @skin="2">Beheer
-        {{this.formInfo.formDefinition.id}}
-        Form Instances</AuHeading>
+      <AuHeading @skin="2">{{this.tableTitle}}</AuHeading>
     </Group>
     <Group>
       <AuButtonGroup>
@@ -21,7 +19,7 @@
           @route="forms.form.new"
           @model={{this.formInfo.formDefinition.id}}
           @skin="button"
-        >Voeg form instance toe</AuLink>
+        >Voeg item toe</AuLink>
       </AuButtonGroup>
     </Group>
   </AuToolbar>
