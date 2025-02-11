@@ -153,6 +153,7 @@
   <Modal.Body>
     <SemanticForms::TableColumnConfigurator
       @labels={{@labels}}
+      @selectedLabelsOnLoad={{this.labels}}
       @onSelectionUpdated={{this.updateTable}}
       @disabledSelection={{this.isTableLoading}}
     />

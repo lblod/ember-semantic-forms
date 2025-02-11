@@ -12,15 +12,13 @@ export default class SemanticFormsTableColumnConfiguratorComponent extends Compo
   constructor() {
     super(...arguments);
 
+    const selectedVarsOfLabel = this.args.selectedLabelsOnLoad
+      .map((l) => l.var ?? null)
+      .filter((v) => v);
     let labelsWithIsSelectedProperty = this.args.labels.map((label) => {
-      let state = false;
-
-      if (label.var === 'uri') {
-        state = true;
-      }
       return {
         ...label,
-        isSelected: state,
+        isSelected: !!selectedVarsOfLabel.includes(label.var),
       };
     });
 
