@@ -9,6 +9,14 @@
     </Group>
     <Group>
       <AuButtonGroup>
+        {{#if @labels}}
+          <AuButton
+            @skin="secondary"
+            {{on "click" (fn (mut this.isColumnConfigurationOpen) true)}}
+          >
+            Configureer kolommen
+          </AuButton>
+        {{/if}}
         {{#if @showDownloadButton}}
           <AuButton
             @skin="secondary"
@@ -23,13 +31,6 @@
       </AuButtonGroup>
     </Group>
   </AuToolbar>
-  {{#if @labels}}
-    <SemanticForms::TableColumnConfigurator
-      @labels={{@labels}}
-      @onSelectionUpdated={{this.updateTable}}
-      @disabledSelection={{this.isTableLoading}}
-    />
-  {{/if}}
   <AuToolbar
     @size="large"
     class="au-u-padding-bottom-none au-u-margin-bottom"
@@ -139,4 +140,21 @@
       </Group>
     </AuToolbar>
   </Modal.Footer>
+</AuModal>
+
+<AuModal
+  @id="column-filters-form-instance"
+  @modalOpen={{this.isColumnConfigurationOpen}}
+  @closeModal={{fn (mut this.isColumnConfigurationOpen) false}}
+  class="small"
+  @title="Selecteer tabel kolommen"
+  as |Modal|
+>
+  <Modal.Body>
+    <SemanticForms::TableColumnConfigurator
+      @labels={{@labels}}
+      @onSelectionUpdated={{this.updateTable}}
+      @disabledSelection={{this.isTableLoading}}
+    />
+  </Modal.Body>
 </AuModal>
