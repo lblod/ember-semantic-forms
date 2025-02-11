@@ -23,6 +23,13 @@
       </AuButtonGroup>
     </Group>
   </AuToolbar>
+  {{#if @labels}}
+    <SemanticForms::TableColumnConfigurator
+      @labels={{@labels}}
+      @onSelectionUpdated={{this.updateTable}}
+      @disabledSelection={{this.isTableLoading}}
+    />
+  {{/if}}
   <AuToolbar
     @size="large"
     class="au-u-padding-bottom-none au-u-margin-bottom"
@@ -93,7 +100,7 @@
 <AuModal
   @id="download-form-instances"
   @modalOpen={{this.isModalOpen}}
-  @closeModal={{(fn (mut this.isModalOpen) false)}}
+  @closeModal={{fn (mut this.isModalOpen) false}}
   class="small"
   @title="Download instanties"
   as |Modal|

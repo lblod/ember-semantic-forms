@@ -5,15 +5,14 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
-import { JSON_API_TYPE } from 'frontend-lmb/utils/constants';
-
-import { timeout, restartableTask } from 'ember-concurrency';
+import { JSON_API_TYPE } from '../../utils/constants';
 
 export default class FormInstanceTableComponent extends Component {
   @service store;
   @service toaster;
   @service semanticFormRepository;
 
+  @tracked isTableLoading;
   @tracked isModalOpen;
 
   @tracked formInfo = null;
@@ -23,7 +22,6 @@ export default class FormInstanceTableComponent extends Component {
     super(...arguments);
     this.labels.push(...this.args.labels);
     this.loadTable();
-    this.refreshTable.perform();
   }
 
   get initialized() {
@@ -54,6 +52,7 @@ export default class FormInstanceTableComponent extends Component {
 
   @action
   async loadTable() {
+    this.isTableLoading = true;
     const formInfo = await this.semanticFormRepository.fetchInstances(
       this.args.formDefinition,
       {
@@ -66,18 +65,16 @@ export default class FormInstanceTableComponent extends Component {
     );
 
     this.formInfo = formInfo;
-    this.args.onTableLoaded();
+    this.isTableLoading = false;
   }
 
-  refreshTable = restartableTask(async () => {
-    await timeout(250);
-    if (this.labelsDiverge) {
-      this.labels.clear();
-      this.labels.push(...this.args.labels);
-      await this.loadTable();
-    }
-    this.refreshTable.perform();
-  });
+  @action
+  async updateTable(selectedLabels) {
+    this.isTableLoading = true;
+    this.labels.clear();
+    this.labels.push(...selectedLabels);
+    await this.loadTable();
+  }
 
   @action filterRow(instance) {
     return Object.fromEntries(
@@ -109,23 +106,6 @@ export default class FormInstanceTableComponent extends Component {
     return (
       this.downloadAllLink +
       `&page[number]=${this.args.page}&page[size]=${this.args.size}`
-    );
-  }
-
-  get labelsDiverge() {
-    if (!this.labels || this.args.labels.length !== this.labels.length) {
-      return true;
-    }
-
-    const thisSortedLabels = this.labels
-      .sort((a, b) => a.order - b.order)
-      .map((l) => l.name);
-    const argsSortedLabels = this.args.labels
-      .sort((a, b) => a.order - b.order)
-      .map((l) => l.name);
-
-    return (
-      JSON.stringify(thisSortedLabels) !== JSON.stringify(argsSortedLabels)
     );
   }
 

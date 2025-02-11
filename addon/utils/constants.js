@@ -1,5 +1,4 @@
-import { NamedNode } from 'rdflib';
-import { Namespace } from 'rdflib';
+import { Namespace, NamedNode } from 'rdflib';
 
 export { MU, FORM, RDF, XSD } from '@lblod/submission-form-helpers';
 

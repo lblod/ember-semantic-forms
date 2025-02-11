@@ -233,4 +233,19 @@ export default class SemanticFormRepositoryService extends Service {
       }),
     };
   }
+
+  async getHeaderLabels(formId) {
+    const response = await fetch(
+      `/form-content/instance-table/${formId}/headers`
+    );
+
+    if (!response.ok) {
+      let error = new Error(response.statusText);
+      error.status = response.status;
+      throw error;
+    }
+    const { headers } = await response.json();
+
+    return headers;
+  }
 }
