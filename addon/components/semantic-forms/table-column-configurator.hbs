@@ -1,6 +1,8 @@
 {{#if @labels}}
   <div class="au-o-box">
-    <p class="au-c-label">Kolommen</p>
+    {{#if @showTitle}}
+      <p class="au-c-label">Kolommen</p>
+    {{/if}}
     <ul>
       {{#each this.sortedLabels as |label|}}
         <li
