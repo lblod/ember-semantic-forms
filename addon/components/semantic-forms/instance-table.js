@@ -18,9 +18,16 @@ export default class FormInstanceTableComponent extends Component {
   @tracked formInfo = null;
   @tracked labels = A();
 
+  selectedLabelOnLoad = {
+    name: 'Uri',
+    var: 'uri',
+    uri: null,
+    order: 0,
+  };
+
   constructor() {
     super(...arguments);
-    this.labels.push(...this.args.labels);
+    this.labels.push(this.selectedLabelOnLoad);
     this.loadTable();
   }
 
