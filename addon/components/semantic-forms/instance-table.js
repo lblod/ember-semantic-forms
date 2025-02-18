@@ -1,20 +1,34 @@
 import Component from '@glimmer/component';
 
+import { A } from '@ember/array';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
-import { JSON_API_TYPE } from 'frontend-lmb/utils/constants';
+import { JSON_API_TYPE } from '../../utils/constants';
 
 export default class FormInstanceTableComponent extends Component {
   @service store;
+  @service toaster;
   @service semanticFormRepository;
 
+  @tracked isTableLoading;
+  @tracked isModalOpen;
+
   @tracked formInfo = null;
+  @tracked labels = A();
+
+  selectedLabelOnLoad = {
+    name: 'Uri',
+    var: 'uri',
+    uri: null,
+    order: 0,
+  };
 
   constructor() {
     super(...arguments);
-    this.onInit();
+    this.labels.push(this.selectedLabelOnLoad);
+    this.loadTable();
   }
 
   get initialized() {
@@ -44,16 +58,63 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   @action
-  async onInit() {
-    const form = this.args.formDefinition;
-
-    const formInfo = await this.semanticFormRepository.fetchInstances(form, {
-      page: this.args.page,
-      size: this.args.size,
-      sort: this.args.sort,
-      filter: this.args.filter,
-    });
+  async loadTable() {
+    this.isTableLoading = true;
+    const formInfo = await this.semanticFormRepository.fetchInstances(
+      this.args.formDefinition,
+      {
+        page: this.args.page,
+        size: this.args.size,
+        sort: this.args.sort,
+        filter: this.args.filter,
+        labels: this.labels,
+      }
+    );
 
     this.formInfo = formInfo;
+    this.isTableLoading = false;
+  }
+
+  @action
+  async updateTable(selectedLabels) {
+    this.isTableLoading = true;
+    this.labels.clear();
+    this.labels.push(...selectedLabels);
+    await this.loadTable();
+  }
+
+  @action
+  downloadStarted() {
+    this.isModalOpen = false;
+    this.toaster.success('Download instanties gestart', 'Download', {
+      timeOut: 2000,
+    });
+  }
+
+  get downloadAllLink() {
+    if (!this.formInfo?.formDefinition) {
+      return null;
+    }
+    const labelsQueryParam = encodeURIComponent(JSON.stringify(this.labels));
+    const sortQueryParam = this.args.sort ?? '';
+
+    return `/form-content/instance-table/${this.formInfo.formDefinition.id}/download?sort=${sortQueryParam}&labels=${labelsQueryParam}`;
+  }
+
+  get downloadPageLink() {
+    return (
+      this.downloadAllLink +
+      `&page[number]=${this.args.page}&page[size]=${this.args.size}`
+    );
+  }
+
+  get tableTitle() {
+    return this.args.title ?? `${this.formInfo?.formDefinition?.id} beheer`;
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.refreshTable.cancelAll();
+    this.labels.clear();
   }
 }

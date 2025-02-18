@@ -1,10 +1,41 @@
-<div {{did-update this.onInit @page}}>
-  <AuToolbar @size="large" class="au-u-padding-bottom-none" as |Group|>
+<div {{did-update this.loadTable @page}}>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
     <Group>
-      <AuHeading @skin="2">Beheer
-        {{this.formInfo.formDefinition.id}}
-        Form Instances</AuHeading>
+      <AuHeading @skin="2">{{this.tableTitle}}</AuHeading>
     </Group>
+    <Group>
+      <AuButtonGroup>
+        {{#if @labels}}
+          <AuButton
+            @skin="secondary"
+            {{on "click" (fn (mut this.isColumnConfigurationOpen) true)}}
+          >
+            Configureer kolommen
+          </AuButton>
+        {{/if}}
+        {{#if @showDownloadButton}}
+          <AuButton
+            @skin="secondary"
+            {{on "click" (fn (mut this.isModalOpen) true)}}
+          >Download</AuButton>
+        {{/if}}
+        <AuLink
+          @route="forms.form.new"
+          @model={{this.formInfo.formDefinition.id}}
+          @skin="button"
+        >Voeg item toe</AuLink>
+      </AuButtonGroup>
+    </Group>
+  </AuToolbar>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
     <Group class="au-u-1-3@medium">
       <AuInput
         value={{@filter}}
@@ -14,13 +45,6 @@
         placeholder="Zoek {{this.formInfo.formDefinition.id}}"
         {{on "input" (perform @search value="target.value")}}
       />
-    </Group>
-    <Group>
-      <AuLink
-        @route="forms.form.new"
-        @model={{this.formInfo.formDefinition.id}}
-        @skin="button"
-      >Voeg form instance toe</AuLink>
     </Group>
   </AuToolbar>
 
@@ -35,21 +59,27 @@
   >
     <t.content as |c|>
       <c.header>
-        {{#each this.formInfo.headers as |key|}}
-          <AuDataTableThSortable
-            @field={{key}}
-            @currentSorting={{@sort}}
-            @label={{key}}
-          />
+        {{#each this.formInfo.headers as |header|}}
+          {{#if header.isCustom}}
+            <th>{{header.label}}</th>
+          {{else}}
+            <AuDataTableThSortable
+              @field={{header.key}}
+              @currentSorting={{@sort}}
+              @label={{header.label}}
+            />
+          {{/if}}
         {{/each}}
         <th>{{! Bewerk }}</th>
         <th>{{! Delete }}</th>
       </c.header>
 
       <c.body as |row|>
-        {{#each-in row as |key value|}}
-          <td class="au-u-word-break">{{value}}</td>
-        {{/each-in}}
+        <SemanticForms::InstanceTableRow
+          @instance={{row}}
+          @labels={{this.labels}}
+        />
+
         <td>
           <LinkTo @route={{@editRoute}} @model={{row.id}} class="au-c-link">
             <AuIcon @icon="pencil" @alignment="left" />
@@ -67,3 +97,65 @@
     </t.content>
   </AuDataTable>
 </div>
+
+<AuModal
+  @id="download-form-instances"
+  @modalOpen={{this.isModalOpen}}
+  @closeModal={{fn (mut this.isModalOpen) false}}
+  class="small"
+  @title="Download instanties"
+  as |Modal|
+>
+  <Modal.Body>
+    <p>
+      Door op download te klikken zal er een csv document beschikbaar gemaakt
+      worden met de huidige kolom configuratie.
+    </p>
+  </Modal.Body>
+  <Modal.Footer>
+    <AuToolbar as |Group|>
+      <Group>
+        <AuLinkExternal
+          role="button"
+          href={{this.downloadPageLink}}
+          download="instances"
+          @skin="button"
+          {{on "click" this.downloadStarted}}
+        >Download deze pagina</AuLinkExternal>
+        <AuLinkExternal
+          role="button"
+          href={{this.downloadAllLink}}
+          download="instances"
+          @skin="button"
+          {{on "click" this.downloadStarted}}
+        >Download</AuLinkExternal>
+      </Group>
+      <Group>
+        <AuButton
+          @skin="secondary"
+          {{on "click" (fn (mut this.isModalOpen) false)}}
+        >
+          Annuleer
+        </AuButton>
+      </Group>
+    </AuToolbar>
+  </Modal.Footer>
+</AuModal>
+
+<AuModal
+  @id="column-filters-form-instance"
+  @modalOpen={{this.isColumnConfigurationOpen}}
+  @closeModal={{fn (mut this.isColumnConfigurationOpen) false}}
+  class="small"
+  @title="Selecteer tabel kolommen"
+  as |Modal|
+>
+  <Modal.Body>
+    <SemanticForms::TableColumnConfigurator
+      @labels={{@labels}}
+      @selectedLabelsOnLoad={{this.labels}}
+      @onSelectionUpdated={{this.updateTable}}
+      @disabledSelection={{this.isTableLoading}}
+    />
+  </Modal.Body>
+</AuModal>

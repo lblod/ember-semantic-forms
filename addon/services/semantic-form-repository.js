@@ -175,10 +175,18 @@ export default class SemanticFormRepositoryService extends Service {
   }
 
   async fetchInstances(formDefinition, options = {}) {
-    const { page = 0, size = 20, sort = '', filter = '' } = options;
+    const {
+      page = 0,
+      size = 20,
+      sort = '',
+      filter = '',
+      labels = [],
+    } = options;
+    const sortedLabels = labels.sort((a, b) => a.order - b.order);
+    const labelsQueryParam = encodeURIComponent(JSON.stringify(sortedLabels));
     const id = formDefinition.id;
     const response = await fetch(
-      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}`
+      `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}&labels=${labelsQueryParam}`
     );
     if (!response.ok) {
       let error = new Error(response.statusText);
@@ -213,15 +221,31 @@ export default class SemanticFormRepositoryService extends Service {
       };
     }
 
-    let headers = [];
-    if (instances.length > 0) {
-      headers = Object.keys(instances[0]);
-    }
-
     return {
       instances,
       formDefinition,
-      headers,
+      headers: sortedLabels.map((l) => {
+        return {
+          key: l.var,
+          label: l.name,
+          isCustom: !!l.isCustom,
+        };
+      }),
     };
+  }
+
+  async getHeaderLabels(formId) {
+    const response = await fetch(
+      `/form-content/instance-table/${formId}/headers`
+    );
+
+    if (!response.ok) {
+      let error = new Error(response.statusText);
+      error.status = response.status;
+      throw error;
+    }
+    const { headers } = await response.json();
+
+    return headers;
   }
 }
