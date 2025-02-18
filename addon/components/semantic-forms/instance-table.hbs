@@ -75,11 +75,11 @@
       </c.header>
 
       <c.body as |row|>
-        {{#let (this.filterRow row) as |instance|}}
-          {{#each-in instance as |key value|}}
-            <td class="au-u-word-break">{{value}}</td>
-          {{/each-in}}
-        {{/let}}
+        <SemanticForms::InstanceTableRow
+          @instance={{row}}
+          @labels={{this.labels}}
+        />
+
         <td>
           <LinkTo @route={{@editRoute}} @model={{row.id}} class="au-c-link">
             <AuIcon @icon="pencil" @alignment="left" />

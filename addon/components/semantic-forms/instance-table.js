@@ -83,14 +83,6 @@ export default class FormInstanceTableComponent extends Component {
     await this.loadTable();
   }
 
-  @action filterRow(instance) {
-    return Object.fromEntries(
-      Object.entries(instance).filter(([key]) =>
-        this.labels.map((l) => l.name).includes(key)
-      )
-    );
-  }
-
   @action
   downloadStarted() {
     this.isModalOpen = false;
