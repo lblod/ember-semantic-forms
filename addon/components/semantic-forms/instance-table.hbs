@@ -24,11 +24,20 @@
           >Download</AuButton>
         {{/if}}
         <AuLink
-          @route="forms.form.new"
+          @route={{this.newFormRoute}}
           @model={{this.formInfo.formDefinition.id}}
           @skin="button"
         >Voeg item toe</AuLink>
       </AuButtonGroup>
+    </Group>
+  </AuToolbar>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
+    <Group>
+      <p>{{this.tableDescription}}</p>
     </Group>
   </AuToolbar>
   <AuToolbar

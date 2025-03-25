@@ -70,7 +70,6 @@ export default class FormInstanceTableComponent extends Component {
         labels: this.labels,
       }
     );
-
     this.formInfo = formInfo;
     this.isTableLoading = false;
   }
@@ -112,9 +111,16 @@ export default class FormInstanceTableComponent extends Component {
     return this.args.title ?? `${this.formInfo?.formDefinition?.id} beheer`;
   }
 
+  get tableDescription() {
+    return this.args.description ?? null;
+  }
+
+  get newFormRoute() {
+    return this.args.newFormRoute || 'forms.form.new';
+  }
+
   willDestroy() {
     super.willDestroy(...arguments);
-    this.refreshTable.cancelAll();
     this.labels.clear();
   }
 }
