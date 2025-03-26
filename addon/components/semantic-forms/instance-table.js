@@ -14,7 +14,6 @@ export default class FormInstanceTableComponent extends Component {
 
   @tracked isTableLoading;
   @tracked isModalOpen;
-  @tracked isEditFormDefinitionOpen;
 
   @tracked formInfo = null;
   @tracked labels = A();
@@ -89,11 +88,6 @@ export default class FormInstanceTableComponent extends Component {
     this.toaster.success('Download instanties gestart', 'Download', {
       timeOut: 2000,
     });
-  }
-
-  @action
-  closeEditFormDefinitionModal() {
-    this.isEditFormDefinitionOpen = false;
   }
 
   get downloadAllLink() {
