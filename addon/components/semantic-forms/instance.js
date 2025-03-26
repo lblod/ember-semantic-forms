@@ -48,6 +48,7 @@ export default class InstanceComponent extends Component {
         );
       } catch (e) {
         this.errorMessage = e;
+        this.isSaveHistoryModalOpen = false;
         return;
       }
     }
