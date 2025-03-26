@@ -8,16 +8,25 @@
       <AuHeading @skin="2">{{this.tableTitle}}</AuHeading>
     </Group>
     <Group>
-      <AuButtonGroup>
+      {{! template-lint-disable require-context-role }}
+      <AuDropdown
+        @title="Meer acties"
+        @skin="secondary"
+        @icon="chevron-down"
+        @iconAlignment="right"
+        @alignment="center"
+      >
         <AuButton
-          @skin="secondary"
+          role="menuitem"
+          @skin="link"
           {{on "click" (fn (mut this.isEditFormDefinitionOpen) true)}}
         >
           Editeer formulier definitie
         </AuButton>
         {{#if @labels}}
           <AuButton
-            @skin="secondary"
+            role="menuitem"
+            @skin="link"
             {{on "click" (fn (mut this.isColumnConfigurationOpen) true)}}
           >
             Configureer kolommen
@@ -25,10 +34,11 @@
         {{/if}}
         {{#if @showDownloadButton}}
           <AuButton
-            @skin="secondary"
             {{on "click" (fn (mut this.isModalOpen) true)}}
           >Download</AuButton>
         {{/if}}
+      </AuDropdown>
+      <AuButtonGroup>
         <AuLink
           @route={{this.newFormRoute}}
           @model={{this.formInfo.formDefinition.id}}
