@@ -9,6 +9,12 @@
     </Group>
     <Group>
       <AuButtonGroup>
+        <AuButton
+          @skin="secondary"
+          {{on "click" (fn (mut this.isEditFormDefinitionOpen) true)}}
+        >
+          Editeer formulier definitie
+        </AuButton>
         {{#if @labels}}
           <AuButton
             @skin="secondary"
@@ -89,15 +95,14 @@
           @labels={{this.labels}}
         />
 
-        <td>
+        <td class="au-u-1-8 au-u-text-center">
           <LinkTo @route={{@editRoute}} @model={{row.id}} class="au-c-link">
-            <AuIcon @icon="pencil" @alignment="left" />
             Bewerk
           </LinkTo>
         </td>
-        <td class="au-u-text-right">
+        <td class="au-u-1-8 au-u-text-center">
           <AuButton
-            @icon="bin"
+            @skin="link"
             @alert={{true}}
             {{on "click" (fn this.removeInstance row)}}
           >Verwijder</AuButton>
@@ -167,4 +172,25 @@
       @disabledSelection={{this.isTableLoading}}
     />
   </Modal.Body>
+</AuModal>
+
+<AuModal
+  @title="Editeer formulier definitie"
+  @modalOpen={{this.isEditFormDefinitionOpen}}
+  @closable={{true}}
+  @closeModal={{this.closeEditFormDefinitionModal}}
+>
+  <div class="au-o-box">
+    <EditableForm
+      @instanceId={{@form.id}}
+      @form={{@form}}
+      @onCancel={{this.closeEditFormDefinitionModal}}
+      @onSave={{this.closeEditFormDefinitionModal}}
+      @formInitialized={{fn (mut this.formInitialized) true}}
+      @customHistoryMessage={{true}}
+    />
+    {{#unless this.formInitialized}}
+      <AuLoader />
+    {{/unless}}
+  </div>
 </AuModal>
