@@ -36,9 +36,21 @@ export default class InstanceComponent extends Component {
   }
 
   save = task({ keepLatest: true }, async () => {
-    const ttlCode = this.sourceTriples;
+    let ttlCode = this.sourceTriples;
     const instanceId = this.formInfo.instanceId;
     this.errorMessage = null;
+
+    if (this.args.beforeSave) {
+      try {
+        ttlCode = await this.args.beforeSave(
+          ttlCode,
+          this.formInfo.sourceNode.value
+        );
+      } catch (e) {
+        this.errorMessage = e;
+        return;
+      }
+    }
 
     const result = await this.semanticFormRepository.updateFormInstance(
       instanceId,
