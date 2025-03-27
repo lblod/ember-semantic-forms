@@ -108,7 +108,7 @@
           <AuButton
             @skin="link"
             @alert={{true}}
-            {{on "click" (fn this.removeInstance row)}}
+            {{on "click" (fn this.openRemoveInstanceModal row)}}
           >Verwijder</AuButton>
         </td>
       </c.body>
@@ -176,4 +176,33 @@
       @disabledSelection={{this.isTableLoading}}
     />
   </Modal.Body>
+</AuModal>
+
+<AuModal
+  @title="Verwijder formulier"
+  @modalOpen={{this.isDeleteModalOpen}}
+  @closable={{true}}
+  @closeModal={{fn (mut this.isDeleteModalOpen) false}}
+>
+  <:body>
+    <p>Door verder te gaan zal deze instantie definitief verwijderd worden.</p>
+  </:body>
+  <:footer>
+    <AuButtonGroup
+      class="au-u-flex au-u-flex--between au-u-padding-left au-u-padding-right"
+    >
+      <AuButton
+        @alert={{true}}
+        @disabled={{this.isDeleting}}
+        @loading={{this.isDeleting}}
+        @loadingMessage="Instantie wordt verwijderd"
+        {{on "click" this.removeInstance}}
+      >Verwijder</AuButton>
+      <AuButton
+        @skin="secondary"
+        @disabled={{this.isDeleting}}
+        {{on "click" (fn (mut this.isDeleteModalOpen) false)}}
+      >Annuleer</AuButton>
+    </AuButtonGroup>
+  </:footer>
 </AuModal>
