@@ -22,16 +22,8 @@ export default class FormInstanceTableComponent extends Component {
   @tracked isDeleting;
   @tracked instanceToRemove;
 
-  selectedLabelOnLoad = {
-    name: 'Uri',
-    var: 'uri',
-    uri: null,
-    order: 0,
-  };
-
   constructor() {
     super(...arguments);
-    this.labels.push(this.selectedLabelOnLoad);
     this.loadTable();
   }
 
