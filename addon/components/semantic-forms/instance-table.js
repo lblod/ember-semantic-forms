@@ -21,6 +21,7 @@ export default class FormInstanceTableComponent extends Component {
   @tracked isDeleteModalOpen;
   @tracked isDeleting;
   @tracked instanceToRemove;
+  @tracked usageOfInstanceToRemove;
 
   selectedLabelOnLoad = {
     name: 'Uri',
@@ -40,9 +41,26 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   @action
-  openRemoveInstanceModal(instance) {
+  async openRemoveInstanceModal(instance) {
     this.instanceToRemove = instance;
+    this.usageOfInstanceToRemove =
+      await this.semanticFormRepository.findFormDefinitionUsage(instance.id);
     this.isDeleteModalOpen = true;
+  }
+
+  get instanceRemoveText() {
+    if (this.usageOfInstanceToRemove?.hasUsage) {
+      const usageCount = this.usageOfInstanceToRemove.usageUris.length;
+      let text = (variableText) =>
+        `${variableText} gevonden. Door verder te gaan zal deze instantie met zijn implementaties definitief verwijderd worden.`;
+
+      if (usageCount > 1) {
+        return text(`Er werden ${usageCount} implementaties `);
+      }
+      return text(`Er werd ${usageCount} implementatie `);
+    }
+
+    return 'Door verder te gaan zal deze instantie definitief verwijderd worden.';
   }
 
   @action
@@ -70,6 +88,7 @@ export default class FormInstanceTableComponent extends Component {
       this.args.onRemoveInstance(this.instanceToRemove.id);
     }
     this.instanceToRemove = null;
+    this.usageOfInstanceToRemove = null;
   }
 
   @action

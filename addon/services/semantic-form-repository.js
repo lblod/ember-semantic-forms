@@ -62,6 +62,21 @@ export default class SemanticFormRepositoryService extends Service {
     return await this._handleUpdateResult(result);
   }
 
+  async findFormDefinitionUsage(instanceId) {
+    const response = await fetch(
+      `/form-content/instance/${instanceId}/has-usage`
+    );
+    const jsonResponse = await response.json();
+
+    if (!response.ok) {
+      console.error({ jsonResponse });
+    }
+    return {
+      hasUsage: jsonResponse.hasUsage,
+      usageUris: jsonResponse.usageUris,
+    };
+  }
+
   async _handleCreateResult(result) {
     if (!result.ok) {
       return {
