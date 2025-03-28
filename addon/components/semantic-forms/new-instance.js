@@ -31,7 +31,7 @@ export default class NewInstanceComponent extends Component {
   }
 
   save = task({ keepLatest: true }, async () => {
-    const ttlCode = this.sourceTriples;
+    let ttlCode = this.sourceTriples;
     this.errorMessage = null;
     const isValid = this.semanticFormRepository.isValidForm(this.formInfo);
     this.forceShowErrors = !isValid;
@@ -39,6 +39,18 @@ export default class NewInstanceComponent extends Component {
       this.errorMessage =
         'Niet alle velden zijn correct ingevuld. Probeer het later opnieuw.';
       return;
+    }
+
+    if (this.args.beforeCreate) {
+      try {
+        ttlCode = await this.args.beforeCreate(
+          ttlCode,
+          this.formInfo.sourceNode.value
+        );
+      } catch (e) {
+        this.errorMessage = e;
+        return;
+      }
     }
 
     const result = await this.semanticFormRepository.createFormInstance(

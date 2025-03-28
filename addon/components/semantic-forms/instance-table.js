@@ -18,6 +18,10 @@ export default class FormInstanceTableComponent extends Component {
   @tracked formInfo = null;
   @tracked labels = A();
 
+  @tracked isDeleteModalOpen;
+  @tracked isDeleting;
+  @tracked instanceToRemove;
+
   selectedLabelOnLoad = {
     name: 'Uri',
     var: 'uri',
@@ -36,9 +40,16 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   @action
-  async removeInstance(instance) {
+  openRemoveInstanceModal(instance) {
+    this.instanceToRemove = instance;
+    this.isDeleteModalOpen = true;
+  }
+
+  @action
+  async removeInstance() {
+    this.isDeleting = true;
     const result = await fetch(
-      `/form-content/${this.formInfo.formDefinition.id}/instances/${instance.id}`,
+      `/form-content/${this.formInfo.formDefinition.id}/instances/${this.instanceToRemove.id}`,
       {
         method: 'DELETE',
         headers: {
@@ -52,9 +63,13 @@ export default class FormInstanceTableComponent extends Component {
         'Er ging iets mis bij het verwijderen van het formulier. Probeer het later opnieuw.';
       return;
     }
+    this.isDeleting = false;
+    this.isDeleteModalOpen = false;
+    await this.loadTable();
     if (this.args.onRemoveInstance) {
-      this.args.onRemoveInstance(instance.id);
+      this.args.onRemoveInstance(this.instanceToRemove.id);
     }
+    this.instanceToRemove = null;
   }
 
   @action
@@ -70,7 +85,6 @@ export default class FormInstanceTableComponent extends Component {
         labels: this.labels,
       }
     );
-
     this.formInfo = formInfo;
     this.isTableLoading = false;
   }
@@ -112,9 +126,16 @@ export default class FormInstanceTableComponent extends Component {
     return this.args.title ?? `${this.formInfo?.formDefinition?.id} beheer`;
   }
 
+  get tableDescription() {
+    return this.args.description ?? null;
+  }
+
+  get newFormRoute() {
+    return this.args.newFormRoute || 'forms.form.new';
+  }
+
   willDestroy() {
     super.willDestroy(...arguments);
-    this.refreshTable.cancelAll();
     this.labels.clear();
   }
 }

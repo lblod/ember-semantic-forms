@@ -8,10 +8,19 @@
       <AuHeading @skin="2">{{this.tableTitle}}</AuHeading>
     </Group>
     <Group>
-      <AuButtonGroup>
+      {{! template-lint-disable require-context-role }}
+      <AuDropdown
+        @title="Meer acties"
+        @skin="secondary"
+        @icon="chevron-down"
+        @iconAlignment="right"
+        @alignment="center"
+      >
+        {{yield to="extraActions"}}
         {{#if @labels}}
           <AuButton
-            @skin="secondary"
+            role="menuitem"
+            @skin="link"
             {{on "click" (fn (mut this.isColumnConfigurationOpen) true)}}
           >
             Configureer kolommen
@@ -19,16 +28,26 @@
         {{/if}}
         {{#if @showDownloadButton}}
           <AuButton
-            @skin="secondary"
             {{on "click" (fn (mut this.isModalOpen) true)}}
           >Download</AuButton>
         {{/if}}
+      </AuDropdown>
+      <AuButtonGroup>
         <AuLink
-          @route="forms.form.new"
+          @route={{this.newFormRoute}}
           @model={{this.formInfo.formDefinition.id}}
           @skin="button"
         >Voeg item toe</AuLink>
       </AuButtonGroup>
+    </Group>
+  </AuToolbar>
+  <AuToolbar
+    @size="large"
+    class="au-u-padding-bottom-none au-u-margin-bottom"
+    as |Group|
+  >
+    <Group>
+      <p>{{this.tableDescription}}</p>
     </Group>
   </AuToolbar>
   <AuToolbar
@@ -42,7 +61,7 @@
         @icon="search"
         @iconAlignment="left"
         @width="block"
-        placeholder="Zoek {{this.formInfo.formDefinition.id}}"
+        placeholder="Zoek..."
         {{on "input" (perform @search value="target.value")}}
       />
     </Group>
@@ -80,17 +99,16 @@
           @labels={{this.labels}}
         />
 
-        <td>
+        <td class="au-u-1-8 au-u-text-center">
           <LinkTo @route={{@editRoute}} @model={{row.id}} class="au-c-link">
-            <AuIcon @icon="pencil" @alignment="left" />
             Bewerk
           </LinkTo>
         </td>
-        <td class="au-u-text-right">
+        <td class="au-u-1-8 au-u-text-center">
           <AuButton
-            @icon="bin"
+            @skin="link"
             @alert={{true}}
-            {{on "click" (fn this.removeInstance row)}}
+            {{on "click" (fn this.openRemoveInstanceModal row)}}
           >Verwijder</AuButton>
         </td>
       </c.body>
@@ -158,4 +176,33 @@
       @disabledSelection={{this.isTableLoading}}
     />
   </Modal.Body>
+</AuModal>
+
+<AuModal
+  @title="Verwijder formulier"
+  @modalOpen={{this.isDeleteModalOpen}}
+  @closable={{true}}
+  @closeModal={{fn (mut this.isDeleteModalOpen) false}}
+>
+  <:body>
+    <p>Door verder te gaan zal deze instantie definitief verwijderd worden.</p>
+  </:body>
+  <:footer>
+    <AuButtonGroup
+      class="au-u-flex au-u-flex--between au-u-padding-left au-u-padding-right"
+    >
+      <AuButton
+        @alert={{true}}
+        @disabled={{this.isDeleting}}
+        @loading={{this.isDeleting}}
+        @loadingMessage="Instantie wordt verwijderd"
+        {{on "click" this.removeInstance}}
+      >Verwijder</AuButton>
+      <AuButton
+        @skin="secondary"
+        @disabled={{this.isDeleting}}
+        {{on "click" (fn (mut this.isDeleteModalOpen) false)}}
+      >Annuleer</AuButton>
+    </AuButtonGroup>
+  </:footer>
 </AuModal>
