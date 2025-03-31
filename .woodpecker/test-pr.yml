@@ -5,22 +5,23 @@ steps:
       - npm ci
   lint-js:
     image: danlynn/ember-cli:5.2.1-node_18.17
-    group: lint
+    depends_on: [install]
     commands:
       - npm run lint:js
   lint-hbs:
     image: danlynn/ember-cli:5.2.1-node_18.17
-    group: lint
+    depends_on: [install]
     commands:
       - npm run lint:hbs
   lint-css:
     image: danlynn/ember-cli:5.2.1-node_18.17
-    group: lint
+    depends_on: [install]
     commands:
       - npm run lint:css
   test:
     image: danlynn/ember-cli:5.2.1-node_18.17
+    depends_on: [install]
     commands:
       - npm run test:ember
 when:
-  event: pull_request
+  - event: pull_request
