@@ -50,17 +50,15 @@ export default class FormInstanceTableComponent extends Component {
 
   get instanceRemoveText() {
     if (this.usageOfInstanceToRemove?.hasUsage) {
-      let text = (variableText) =>
-        `${variableText} gevonden. Door verder te gaan zal deze instantie met zijn implementaties definitief verwijderd worden.`;
+      const postFix =
+        'Door verder te gaan zal deze instantie met zijn implementaties definitief verwijderd worden. ';
+      let countText = `Er werd ${this.usageOfInstanceToRemove.count} implementatie gevonden. `;
 
-      if (this.usageOfInstanceToRemove.count > 1) {
-        return text(
-          `Er werden ${this.usageOfInstanceToRemove.count} implementaties `
-        );
+      if (this.usageOfInstanceToRemove?.count > 1) {
+        countText = `Er werden ${this.usageOfInstanceToRemove.count} implementaties gevonden. `;
       }
-      return text(
-        `Er werd ${this.usageOfInstanceToRemove.count} implementatie `
-      );
+
+      return countText + postFix;
     }
 
     return 'Door verder te gaan zal deze instantie definitief verwijderd worden.';
