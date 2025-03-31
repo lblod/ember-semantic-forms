@@ -62,9 +62,9 @@ export default class SemanticFormRepositoryService extends Service {
     return await this._handleUpdateResult(result);
   }
 
-  async findFormDefinitionUsage(instanceId) {
+  async getInstanceUsageCount(instanceId) {
     const response = await fetch(
-      `/form-content/instance/${instanceId}/has-usage`
+      `/form-content/instance/${instanceId}/usage-count`
     );
     const jsonResponse = await response.json();
 
@@ -73,7 +73,7 @@ export default class SemanticFormRepositoryService extends Service {
     }
     return {
       hasUsage: jsonResponse.hasUsage,
-      usageUris: jsonResponse.usageUris,
+      count: jsonResponse.count,
     };
   }
 

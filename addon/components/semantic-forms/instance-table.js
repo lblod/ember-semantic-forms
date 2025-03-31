@@ -44,20 +44,23 @@ export default class FormInstanceTableComponent extends Component {
   async openRemoveInstanceModal(instance) {
     this.instanceToRemove = instance;
     this.usageOfInstanceToRemove =
-      await this.semanticFormRepository.findFormDefinitionUsage(instance.id);
+      await this.semanticFormRepository.getInstanceUsageCount(instance.id);
     this.isDeleteModalOpen = true;
   }
 
   get instanceRemoveText() {
     if (this.usageOfInstanceToRemove?.hasUsage) {
-      const usageCount = this.usageOfInstanceToRemove.usageUris.length;
       let text = (variableText) =>
         `${variableText} gevonden. Door verder te gaan zal deze instantie met zijn implementaties definitief verwijderd worden.`;
 
-      if (usageCount > 1) {
-        return text(`Er werden ${usageCount} implementaties `);
+      if (this.usageOfInstanceToRemove.count > 1) {
+        return text(
+          `Er werden ${this.usageOfInstanceToRemove.count} implementaties `
+        );
       }
-      return text(`Er werd ${usageCount} implementatie `);
+      return text(
+        `Er werd ${this.usageOfInstanceToRemove.count} implementatie `
+      );
     }
 
     return 'Door verder te gaan zal deze instantie definitief verwijderd worden.';
