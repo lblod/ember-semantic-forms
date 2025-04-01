@@ -3,7 +3,17 @@
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
-  const app = new EmberAddon(defaults, {});
+  const app = new EmberAddon(defaults, {
+    autoImport: {
+      webpack: {
+        resolve: {
+          fallback: {
+            url: false,
+          },
+        },
+      },
+    },
+  });
 
   /*
     This build file specifies the options for the dummy test app of this

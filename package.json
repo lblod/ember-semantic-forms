@@ -33,10 +33,12 @@
     "ember-auto-import": "^2.7.2",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.2.0",
-    "ember-concurrency": "^2.3.2 || ^3.0.0",
+    "ember-concurrency": "^4.0.2",
+    "ember-power-select": "^8.0.0",
     "rdflib": "^2.2.19"
   },
   "devDependencies": {
+    "@appuniversum/ember-appuniversum": "^2.15.0 || ^3.0.0",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@ember/optional-features": "^2.0.0",
@@ -45,6 +47,7 @@
     "@embroider/test-setup": "^2.1.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@lblod/ember-submission-form-fields": "~2.26.2",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.0.1",
     "ember-auto-import": "^2.6.3",
@@ -73,17 +76,15 @@
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "release-it": "^14.12.5",
-    "@lblod/ember-submission-form-fields": "~2.23.0",
-    "@appuniversum/ember-appuniversum": "^2.15.0 || ^3.0.0",
-    "uuid": "^9.0.0",
     "stylelint": "^15.4.0",
     "stylelint-config-standard": "^32.0.0",
     "stylelint-prettier": "^3.0.0",
+    "uuid": "^9.0.0",
     "webpack": "^5.78.0"
   },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^2.15.0 || ^3.0.0",
-    "@lblod/ember-submission-form-fields": "~2.23.0",
+    "@lblod/ember-submission-form-fields": "~2.26.2",
     "uuid": "^9.0.0",
     "ember-source": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
