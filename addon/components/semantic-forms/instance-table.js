@@ -21,6 +21,7 @@ export default class FormInstanceTableComponent extends Component {
   @tracked isDeleteModalOpen;
   @tracked isDeleting;
   @tracked instanceToRemove;
+  @tracked usageOfInstanceToRemove;
 
   constructor() {
     super(...arguments);
@@ -32,9 +33,27 @@ export default class FormInstanceTableComponent extends Component {
   }
 
   @action
-  openRemoveInstanceModal(instance) {
+  async openRemoveInstanceModal(instance) {
     this.instanceToRemove = instance;
+    this.usageOfInstanceToRemove =
+      await this.semanticFormRepository.getInstanceUsageCount(instance.id);
     this.isDeleteModalOpen = true;
+  }
+
+  get instanceRemoveText() {
+    if (this.usageOfInstanceToRemove?.hasUsage) {
+      const postFix =
+        'Door verder te gaan zal deze instantie met zijn implementaties definitief verwijderd worden. ';
+      let countText = `Er werd ${this.usageOfInstanceToRemove.count} implementatie gevonden. `;
+
+      if (this.usageOfInstanceToRemove?.count > 1) {
+        countText = `Er werden ${this.usageOfInstanceToRemove.count} implementaties gevonden. `;
+      }
+
+      return countText + postFix;
+    }
+
+    return 'Door verder te gaan zal deze instantie definitief verwijderd worden.';
   }
 
   @action
@@ -62,6 +81,7 @@ export default class FormInstanceTableComponent extends Component {
       this.args.onRemoveInstance(this.instanceToRemove.id);
     }
     this.instanceToRemove = null;
+    this.usageOfInstanceToRemove = null;
   }
 
   @action
