@@ -52,12 +52,12 @@ export default class SemanticFormsTableColumnConfiguratorComponent extends Compo
 
   @action
   moveLabel(label, upDown) {
-    const indexOfLabel = this.labels.indexOf(label);
+    const indexOfLabel = this.selectedLabels.indexOf(label);
     let switchLabel = null;
     if (upDown === 'up') {
-      switchLabel = this.labels.objectAt(indexOfLabel - 1);
+      switchLabel = A([...this.selectedLabels]).objectAt(indexOfLabel - 1);
     } else {
-      switchLabel = this.labels.objectAt(indexOfLabel + 1);
+      switchLabel = A([...this.selectedLabels]).objectAt(indexOfLabel + 1);
     }
 
     if (!switchLabel) {

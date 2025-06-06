@@ -15,26 +15,28 @@
             role="button"
             class="au-u-flex au-u-flex--vertical-center"
           >{{label.name}}</p>
-          <div
-            class="au-u-flex au-u-flex--row au-u-flex--vertical-center au-u-flex-self-end"
-          >
-            <AuButton
-              @skin="naked"
-              @icon="nav-up"
-              @hideText={{true}}
-              {{on "click" (fn this.moveLabel label "up")}}
+          {{#if label.isSelected}}
+            <div
+              class="au-u-flex au-u-flex--row au-u-flex--vertical-center au-u-flex-self-end"
             >
-              Naar boven
-            </AuButton>
-            <AuButton
-              @skin="naked"
-              @icon="nav-down"
-              @hideText={{true}}
-              {{on "click" (fn this.moveLabel label "down")}}
-            >
-              Naar onder
-            </AuButton>
-          </div>
+              <AuButton
+                @skin="naked"
+                @icon="nav-up"
+                @hideText={{true}}
+                {{on "click" (fn this.moveLabel label "up")}}
+              >
+                Naar boven
+              </AuButton>
+              <AuButton
+                @skin="naked"
+                @icon="nav-down"
+                @hideText={{true}}
+                {{on "click" (fn this.moveLabel label "down")}}
+              >
+                Naar onder
+              </AuButton>
+            </div>
+          {{/if}}
         </li>
       {{/each}}
     </ul>

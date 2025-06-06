@@ -234,7 +234,6 @@ export default class SemanticFormRepositoryService extends Service {
         size: size,
       };
     }
-    console.log({ newLabels });
     return {
       instances,
       formDefinition,
