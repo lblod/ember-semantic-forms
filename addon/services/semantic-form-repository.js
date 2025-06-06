@@ -234,18 +234,11 @@ export default class SemanticFormRepositoryService extends Service {
         size: size,
       };
     }
-
+    console.log({ newLabels });
     return {
       instances,
       formDefinition,
       labels: newLabels,
-      headers: newLabels.map((l) => {
-        return {
-          key: l.var,
-          label: l.name,
-          isCustom: !!l.isCustom,
-        };
-      }),
     };
   }
 

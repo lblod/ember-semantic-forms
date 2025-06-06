@@ -83,7 +83,11 @@ export default class SemanticFormsTableColumnConfiguratorComponent extends Compo
   }
 
   get selectedLabels() {
-    return this.labels?.filter((label) => label.isSelected) ?? [];
+    return (
+      this.labels
+        ?.filter((label) => label.isSelected)
+        .sort((a, b) => a.order - b.order) ?? []
+    );
   }
 
   get disabledSelection() {

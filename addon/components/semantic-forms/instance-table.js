@@ -88,6 +88,7 @@ export default class FormInstanceTableComponent extends Component {
   @action
   async loadTable() {
     this.isTableLoading = true;
+    this.formInfo = null;
     this.formInfo = await this.semanticFormRepository.fetchInstances(
       this.args.formDefinition,
       {
@@ -98,9 +99,26 @@ export default class FormInstanceTableComponent extends Component {
         labels: this.labels,
       }
     );
-    this.configurableLabels = await this.semanticFormRepository.getHeaderLabels(
-      this.args.formDefinition.id
-    );
+    if (this.labels.length === 0) {
+      this.labels.pushObjects(this.formInfo.labels);
+    }
+    const baseConfigurableLabels =
+      await this.semanticFormRepository.getHeaderLabels(
+        this.args.formDefinition.id
+      );
+    this.configurableLabels = baseConfigurableLabels
+      .map((label) => {
+        const match = this.labels.find((l) => l.var === label.var);
+        if (match && match.order) {
+          delete label.order;
+          return {
+            ...label,
+            order: match.order,
+          };
+        }
+        return label;
+      })
+      .sort((a, b) => A.order - b.order);
     this.isTableLoading = false;
   }
 
@@ -108,7 +126,7 @@ export default class FormInstanceTableComponent extends Component {
   async updateTable(selectedLabels) {
     this.isTableLoading = true;
     this.labels.clear();
-    this.labels.push(...selectedLabels);
+    this.labels.pushObjects(selectedLabels);
     await this.loadTable();
   }
 

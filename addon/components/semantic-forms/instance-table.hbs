@@ -78,14 +78,14 @@
   >
     <t.content as |c|>
       <c.header>
-        {{#each this.formInfo.headers as |header|}}
-          {{#if header.isCustom}}
-            <th>{{header.label}}</th>
+        {{#each this.labels as |label|}}
+          {{#if label.isCustom}}
+            <th>{{label.name}}</th>
           {{else}}
             <AuDataTableThSortable
-              @field={{header.key}}
+              @field={{label.var}}
               @currentSorting={{@sort}}
-              @label={{header.label}}
+              @label={{label.name}}
             />
           {{/if}}
         {{/each}}
@@ -96,7 +96,7 @@
       <c.body as |row|>
         <SemanticForms::InstanceTableRow
           @instance={{row}}
-          @labels={{this.formInfo.labels}}
+          @labels={{this.labels}}
         />
 
         <td class="au-u-1-8 au-u-text-center">
@@ -169,12 +169,12 @@
   as |Modal|
 >
   <Modal.Body>
-    <SemanticForms::TableColumnConfigurator
-      @labels={{this.configurableLabels}}
-      @selectedLabelsOnLoad={{this.labels}}
-      @onSelectionUpdated={{this.updateTable}}
-      @disabledSelection={{this.isTableLoading}}
-    />
+      <SemanticForms::TableColumnConfigurator
+        @labels={{this.configurableLabels}}
+        @selectedLabelsOnLoad={{this.labels}}
+        @onSelectionUpdated={{this.updateTable}}
+        @disabledSelection={{this.isTableLoading}}
+      />
   </Modal.Body>
 </AuModal>
 
