@@ -17,6 +17,7 @@ export default class FormInstanceTableComponent extends Component {
 
   @tracked formInfo = null;
   @tracked labels = A();
+  @tracked configurableLabels = A();
 
   @tracked isDeleteModalOpen;
   @tracked isDeleting;
@@ -87,7 +88,7 @@ export default class FormInstanceTableComponent extends Component {
   @action
   async loadTable() {
     this.isTableLoading = true;
-    const formInfo = await this.semanticFormRepository.fetchInstances(
+    this.formInfo = await this.semanticFormRepository.fetchInstances(
       this.args.formDefinition,
       {
         page: this.args.page,
@@ -97,7 +98,9 @@ export default class FormInstanceTableComponent extends Component {
         labels: this.labels,
       }
     );
-    this.formInfo = formInfo;
+    this.configurableLabels = await this.semanticFormRepository.getHeaderLabels(
+      this.args.formDefinition.id
+    );
     this.isTableLoading = false;
   }
 

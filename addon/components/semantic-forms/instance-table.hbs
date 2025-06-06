@@ -17,7 +17,7 @@
         @alignment="center"
       >
         {{yield to="extraActions"}}
-        {{#if @labels}}
+        {{#if this.configurableLabels}}
           <AuButton
             role="menuitem"
             @skin="link"
@@ -170,7 +170,7 @@
 >
   <Modal.Body>
     <SemanticForms::TableColumnConfigurator
-      @labels={{@labels}}
+      @labels={{this.configurableLabels}}
       @selectedLabelsOnLoad={{this.labels}}
       @onSelectionUpdated={{this.updateTable}}
       @disabledSelection={{this.isTableLoading}}
