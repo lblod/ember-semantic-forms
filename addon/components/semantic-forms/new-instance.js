@@ -35,13 +35,7 @@ export default class NewInstanceComponent extends Component {
   save = task({ keepLatest: true }, async () => {
     let ttlCode = this.sourceTriples;
     this.errorMessage = null;
-    // TODO this can go as user is not able to save when there are errors?
     this.forceShowErrors = !this.isValidForm;
-    if (!this.isValidForm) {
-      this.errorMessage =
-        'Niet alle velden zijn correct ingevuld. Probeer het later opnieuw.';
-      return;
-    }
 
     if (this.args.beforeCreate) {
       try {

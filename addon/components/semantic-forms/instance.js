@@ -83,12 +83,7 @@ export default class InstanceComponent extends Component {
   @action
   async tryOpenHistoryModal() {
     this.forceShowErrors = !this.isValidForm;
-    // TODO this can go as user is not able to save when there are errors?
-    if (!this.isValidForm) {
-      this.errorMessage =
-        'Niet alle velden zijn correct ingevuld. Gelieve deze eerst te corrigeren.';
-      return;
-    }
+
     if (this.args.customHistoryMessage) {
       this.isSaveHistoryModalOpen = true;
     } else {
