@@ -16,7 +16,7 @@
         @useNewListingLayout={{true}}
         @lazyGenerators={{true}}
         @level={{2}}
-        class={{if @formClass @formClass "au-u-max-width-medium" }}
+        class={{if @formClass @formClass "au-u-max-width-medium"}}
       />
       {{yield}}
     </section>
@@ -27,14 +27,18 @@
       </AuAlert>
     {{/if}}
 
-
     {{#unless @show}}
       <AuToolbar as |Group|>
         <Group>
           <AuButtonGroup>
             <AuButton
               {{on "click" this.tryOpenHistoryModal}}
-              @disabled={{or this.save.isRunning (not this.hasChanges)}}
+              @disabled={{or
+                this.save.isRunning
+                this.isRunningValidationsOnForm
+                (not this.hasChanges)
+                (not this.isValidForm)
+              }}
               @loading={{this.save.isRunning}}
               @loadingMessage={{this.saveTitle}}
             >{{this.saveTitle}}</AuButton>

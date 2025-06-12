@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 
-import { timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { JSON_API_TYPE, RESOURCE_CACHE_TIMEOUT } from '../utils/constants';
 import { validateForm } from '@lblod/ember-submission-form-fields';
 import { tracked } from '@glimmer/tracking';
@@ -163,6 +163,25 @@ export default class SemanticFormRepositoryService extends Service {
       store: formInfo.formStore,
     });
   }
+
+  validateForm = task({ keepLatest: true }, async (formInfo, cb = null) => {
+    await timeout(250);
+    if (this._isFormInfo(formInfo)) {
+      return false;
+    }
+
+    const isValid = await validateForm(formInfo.formNode, {
+      ...formInfo.graphs,
+      sourceNode: formInfo.sourceNode,
+      store: formInfo.formStore,
+    });
+
+    if (cb) {
+      cb(isValid);
+    }
+
+    return isValid;
+  });
 
   _isFormInfo(formInfo) {
     if (!formInfo) {

@@ -23,6 +23,7 @@ export default class InstanceComponent extends Component {
   @tracked forceShowErrors = false;
   @tracked showEditButtons = false;
   @tracked isSaveHistoryModalOpen = false;
+  @tracked isValidForm = false;
 
   createdAt = null;
   formStore = null;
@@ -81,11 +82,9 @@ export default class InstanceComponent extends Component {
 
   @action
   async tryOpenHistoryModal() {
-    const isValid = await this.semanticFormRepository.isValidForm(
-      this.formInfo
-    );
-    this.forceShowErrors = !isValid;
-    if (!isValid) {
+    this.forceShowErrors = !this.isValidForm;
+    // TODO this can go as user is not able to save when there are errors?
+    if (!this.isValidForm) {
       this.errorMessage =
         'Niet alle velden zijn correct ingevuld. Gelieve deze eerst te corrigeren.';
       return;
@@ -176,6 +175,10 @@ export default class InstanceComponent extends Component {
     this.formInfo?.formStore?.clearObservers();
   }
 
+  get isRunningValidationsOnForm() {
+    return this.semanticFormRepository.validateForm?.isRunning;
+  }
+
   registerObserver(formStore) {
     const onFormUpdate = () => {
       if (this.isDestroyed) {
@@ -200,6 +203,11 @@ export default class InstanceComponent extends Component {
         this.semanticFormDirtyState.markDirty(this.formId);
         this.hasChanges = true;
       }
+      this.isValidForm = false;
+      this.isValidForm = this.semanticFormRepository.validateForm.perform(
+        this.formInfo,
+        (validationResult) => (this.isValidForm = validationResult)
+      );
     };
     formStore.registerObserver(onFormUpdate);
     onFormUpdate();
