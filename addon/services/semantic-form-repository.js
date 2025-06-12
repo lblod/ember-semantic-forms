@@ -152,7 +152,7 @@ export default class SemanticFormRepositoryService extends Service {
     return def;
   }
 
-  isValidForm(formInfo) {
+  async isValidForm(formInfo) {
     if (this._isFormInfo(formInfo)) {
       return false;
     }

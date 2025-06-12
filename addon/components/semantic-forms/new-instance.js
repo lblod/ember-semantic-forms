@@ -33,7 +33,9 @@ export default class NewInstanceComponent extends Component {
   save = task({ keepLatest: true }, async () => {
     let ttlCode = this.sourceTriples;
     this.errorMessage = null;
-    const isValid = this.semanticFormRepository.isValidForm(this.formInfo);
+    const isValid = await this.semanticFormRepository.isValidForm(
+      this.formInfo
+    );
     this.forceShowErrors = !isValid;
     if (!isValid) {
       this.errorMessage =

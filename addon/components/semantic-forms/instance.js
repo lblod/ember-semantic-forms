@@ -81,7 +81,9 @@ export default class InstanceComponent extends Component {
 
   @action
   async tryOpenHistoryModal() {
-    const isValid = this.semanticFormRepository.isValidForm(this.formInfo);
+    const isValid = await this.semanticFormRepository.isValidForm(
+      this.formInfo
+    );
     this.forceShowErrors = !isValid;
     if (!isValid) {
       this.errorMessage =
