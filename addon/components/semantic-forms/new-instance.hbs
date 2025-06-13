@@ -28,7 +28,15 @@
         <AuButtonGroup>
           <AuButton
             {{on "click" (perform this.save)}}
-            @loading={{this.save.isRunning}}
+            @disabled={{or
+              (not this.isValidForm)
+              this.isRunningValidationsOnForm
+            }}
+            @loading={{or
+              this.save.isRunning
+              this.this.isRunningValidationsOnForm
+            }}
+            @loadingMessage={{this.saveButtonLoadingText}}
           >
             Bewaar
           </AuButton>

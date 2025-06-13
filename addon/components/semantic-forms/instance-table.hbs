@@ -73,7 +73,7 @@
     @page={{@page}}
     @size={{@size}}
     @isLoading={{not this.initialized}}
-    @noDataMessage="Geen instance gevonden."
+    @noDataMessage={{this.noDataMessage}}
     as |t|
   >
     <t.content as |c|>
