@@ -17,6 +17,7 @@ export default class FormInstanceTableComponent extends Component {
 
   @tracked formInfo = null;
   @tracked labels = A();
+  @tracked configurableLabels = A();
 
   @tracked isDeleteModalOpen;
   @tracked isDeleting;
@@ -87,7 +88,8 @@ export default class FormInstanceTableComponent extends Component {
   @action
   async loadTable() {
     this.isTableLoading = true;
-    const formInfo = await this.semanticFormRepository.fetchInstances(
+    this.formInfo = null;
+    this.formInfo = await this.semanticFormRepository.fetchInstances(
       this.args.formDefinition,
       {
         page: this.args.page,
@@ -97,7 +99,26 @@ export default class FormInstanceTableComponent extends Component {
         labels: this.labels,
       }
     );
-    this.formInfo = formInfo;
+    if (this.labels.length === 0) {
+      this.labels.pushObjects(this.formInfo.labels);
+    }
+    const baseConfigurableLabels =
+      await this.semanticFormRepository.getHeaderLabels(
+        this.args.formDefinition.id
+      );
+    this.configurableLabels = baseConfigurableLabels
+      .map((label) => {
+        const match = this.labels.find((l) => l.var === label.var);
+        if (match && match.order) {
+          delete label.order;
+          return {
+            ...label,
+            order: match.order,
+          };
+        }
+        return label;
+      })
+      .sort((a, b) => A.order - b.order);
     this.isTableLoading = false;
   }
 
@@ -105,7 +126,7 @@ export default class FormInstanceTableComponent extends Component {
   async updateTable(selectedLabels) {
     this.isTableLoading = true;
     this.labels.clear();
-    this.labels.push(...selectedLabels);
+    this.labels.pushObjects(selectedLabels);
     await this.loadTable();
   }
 

@@ -197,8 +197,7 @@ export default class SemanticFormRepositoryService extends Service {
       filter = '',
       labels = [],
     } = options;
-    let sortedLabels = labels.sort((a, b) => a.order - b.order);
-    const labelsQueryParam = encodeURIComponent(JSON.stringify(sortedLabels));
+    const labelsQueryParam = encodeURIComponent(JSON.stringify(labels));
     const id = formDefinition.id;
     const response = await fetch(
       `/form-content/${id}/instances?page[size]=${size}&page[number]=${page}&sort=${sort}&filter=${filter}&labels=${labelsQueryParam}`
@@ -209,8 +208,6 @@ export default class SemanticFormRepositoryService extends Service {
       throw error;
     }
     const { instances, labels: newLabels } = await response.json();
-    sortedLabels = (newLabels || labels).sort((a, b) => a.order - b.order);
-
     instances.meta = instances.meta || {};
     instances.meta.count = parseInt(response.headers.get('X-Total-Count'), 10);
     instances.meta.pagination = {
@@ -237,18 +234,10 @@ export default class SemanticFormRepositoryService extends Service {
         size: size,
       };
     }
-
     return {
       instances,
       formDefinition,
-      labels: sortedLabels,
-      headers: sortedLabels.map((l) => {
-        return {
-          key: l.var,
-          label: l.name,
-          isCustom: !!l.isCustom,
-        };
-      }),
+      labels: newLabels,
     };
   }
 
