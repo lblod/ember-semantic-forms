@@ -167,6 +167,10 @@ export default class FormInstanceTableComponent extends Component {
     return this.args.newFormRoute || 'forms.form.new';
   }
 
+  get noDataMessage() {
+    return this.args.noDataMessage || 'Geen instance gevonden.';
+  }
+
   willDestroy() {
     super.willDestroy(...arguments);
     this.labels.clear();
