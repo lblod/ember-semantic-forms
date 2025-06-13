@@ -32,7 +32,11 @@
               (not this.isValidForm)
               this.isRunningValidationsOnForm
             }}
-            @loading={{this.save.isRunning}}
+            @loading={{or
+              this.save.isRunning
+              this.this.isRunningValidationsOnForm
+            }}
+            @loadingMessage={{this.saveButtonLoadingText}}
           >
             Bewaar
           </AuButton>

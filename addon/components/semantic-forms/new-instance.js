@@ -122,6 +122,17 @@ export default class NewInstanceComponent extends Component {
     this.formInfo?.formStore?.clearObservers();
   }
 
+  get saveButtonLoadingText() {
+    if (this.save.isRunning) {
+      return 'Opslaan';
+    }
+    if (this.isRunningValidationsOnForm) {
+      return 'Valideren';
+    }
+
+    return null;
+  }
+
   get isRunningValidationsOnForm() {
     return this.semanticFormRepository.validateForm?.isRunning;
   }

@@ -39,8 +39,11 @@
                 (not this.hasChanges)
                 (not this.isValidForm)
               }}
-              @loading={{this.save.isRunning}}
-              @loadingMessage={{this.saveTitle}}
+              @loading={{or
+                this.save.isRunning
+                this.isRunningValidationsOnForm
+              }}
+              @loadingMessage={{this.saveButtonLoadingText}}
             >{{this.saveTitle}}</AuButton>
             <SemanticForms::SaveWithHistory
               @save={{perform this.save}}

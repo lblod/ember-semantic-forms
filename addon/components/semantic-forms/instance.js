@@ -36,6 +36,17 @@ export default class InstanceComponent extends Component {
     return this.args.saveTitle || 'Pas aan';
   }
 
+  get saveButtonLoadingText() {
+    if (this.save.isRunning) {
+      return 'Opslaan';
+    }
+    if (this.isRunningValidationsOnForm) {
+      return 'Valideren';
+    }
+
+    return null;
+  }
+
   save = task({ keepLatest: true }, async () => {
     let ttlCode = this.sourceTriples;
     const instanceId = this.formInfo.instanceId;
