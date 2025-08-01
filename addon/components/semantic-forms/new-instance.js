@@ -20,6 +20,8 @@ export default class NewInstanceComponent extends Component {
   @tracked errorMessage;
   @tracked formInfo = null;
   @tracked forceShowErrors = false;
+  @tracked isValidForm = false;
+
   createdAt = null;
   formStore = null;
   savedTriples = null;
@@ -33,13 +35,7 @@ export default class NewInstanceComponent extends Component {
   save = task({ keepLatest: true }, async () => {
     let ttlCode = this.sourceTriples;
     this.errorMessage = null;
-    const isValid = this.semanticFormRepository.isValidForm(this.formInfo);
-    this.forceShowErrors = !isValid;
-    if (!isValid) {
-      this.errorMessage =
-        'Niet alle velden zijn correct ingevuld. Probeer het later opnieuw.';
-      return;
-    }
+    this.forceShowErrors = !this.isValidForm;
 
     if (this.args.beforeCreate) {
       try {
@@ -126,6 +122,21 @@ export default class NewInstanceComponent extends Component {
     this.formInfo?.formStore?.clearObservers();
   }
 
+  get saveButtonLoadingText() {
+    if (this.save.isRunning) {
+      return 'Opslaan';
+    }
+    if (this.isRunningValidationsOnForm) {
+      return 'Valideren';
+    }
+
+    return null;
+  }
+
+  get isRunningValidationsOnForm() {
+    return this.semanticFormRepository.validateForm?.isRunning;
+  }
+
   registerObserver(formStore) {
     const onFormUpdate = () => {
       if (this.isDestroyed) {
@@ -145,6 +156,11 @@ export default class NewInstanceComponent extends Component {
       } else if (new Date().getTime() - this.createdAt.getTime() > 200) {
         this.semanticFormDirtyState.markDirty(this.formId);
       }
+      this.isValidForm = false;
+      this.semanticFormRepository.validateForm.perform(
+        this.formInfo,
+        (validationResult) => (this.isValidForm = validationResult)
+      );
     };
     formStore.registerObserver(onFormUpdate);
     onFormUpdate();

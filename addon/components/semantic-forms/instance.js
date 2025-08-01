@@ -23,6 +23,7 @@ export default class InstanceComponent extends Component {
   @tracked forceShowErrors = false;
   @tracked showEditButtons = false;
   @tracked isSaveHistoryModalOpen = false;
+  @tracked isValidForm = false;
 
   createdAt = null;
   formStore = null;
@@ -33,6 +34,17 @@ export default class InstanceComponent extends Component {
 
   get saveTitle() {
     return this.args.saveTitle || 'Pas aan';
+  }
+
+  get saveButtonLoadingText() {
+    if (this.save.isRunning) {
+      return 'Opslaan';
+    }
+    if (this.isRunningValidationsOnForm) {
+      return 'Valideren';
+    }
+
+    return null;
   }
 
   save = task({ keepLatest: true }, async () => {
@@ -81,13 +93,8 @@ export default class InstanceComponent extends Component {
 
   @action
   async tryOpenHistoryModal() {
-    const isValid = this.semanticFormRepository.isValidForm(this.formInfo);
-    this.forceShowErrors = !isValid;
-    if (!isValid) {
-      this.errorMessage =
-        'Niet alle velden zijn correct ingevuld. Gelieve deze eerst te corrigeren.';
-      return;
-    }
+    this.forceShowErrors = !this.isValidForm;
+
     if (this.args.customHistoryMessage) {
       this.isSaveHistoryModalOpen = true;
     } else {
@@ -174,6 +181,10 @@ export default class InstanceComponent extends Component {
     this.formInfo?.formStore?.clearObservers();
   }
 
+  get isRunningValidationsOnForm() {
+    return this.semanticFormRepository.validateForm?.isRunning;
+  }
+
   registerObserver(formStore) {
     const onFormUpdate = () => {
       if (this.isDestroyed) {
@@ -198,6 +209,11 @@ export default class InstanceComponent extends Component {
         this.semanticFormDirtyState.markDirty(this.formId);
         this.hasChanges = true;
       }
+      this.isValidForm = false;
+      this.isValidForm = this.semanticFormRepository.validateForm.perform(
+        this.formInfo,
+        (validationResult) => (this.isValidForm = validationResult)
+      );
     };
     formStore.registerObserver(onFormUpdate);
     onFormUpdate();
