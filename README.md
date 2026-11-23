@@ -51,6 +51,8 @@ they are absent:
   `gebruiker` model to resolve the users in the history list. Without a
   `gebruiker` model the history table breaks.
 
+For an example use of this plugin, have a look at [the LMB frontend](https://github.com/lblod/frontend-lokaal-mandatenbeheer/).
+
 ## Requirements on the form definition
 
 The addon renders whatever `formTtl` the service returns, but the service has
